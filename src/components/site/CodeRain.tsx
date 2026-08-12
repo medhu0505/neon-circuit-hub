@@ -35,13 +35,13 @@ export function CodeRain() {
       ctx.fillRect(0, 0, width, height);
       ctx.font = "13px 'JetBrains Mono', monospace";
       for (let i = 0; i < cols; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        const y = drops[i] * 16;
+        const char = chars[Math.floor(Math.random() * chars.length)] ?? "0";
+        const y = (drops[i] ?? 0) * 16;
         ctx.fillStyle =
           Math.random() > 0.94 ? "rgba(168,85,247,0.55)" : "rgba(57,255,20,0.28)";
         ctx.fillText(char, i * 16, y);
         if (y > height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+        drops[i] = (drops[i] ?? 0) + 1;
       }
     };
 
