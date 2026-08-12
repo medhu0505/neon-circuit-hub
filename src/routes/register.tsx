@@ -4,9 +4,10 @@ import { Reveal } from "@/components/site/Reveal";
 import { events } from "@/lib/events";
 
 export const Route = createFileRoute("/register")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    event: typeof search.event === "string" ? search.event : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { event?: string } => {
+    const raw = search["event"];
+    return typeof raw === "string" ? { event: raw } : {};
+  },
   head: () => ({
     meta: [
       { title: "Register a Team — Interschool Arena 2026" },
