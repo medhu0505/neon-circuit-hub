@@ -149,8 +149,8 @@ function RegisterPage() {
               </dl>
               <p className="mt-6 font-mono text-xs text-muted-foreground">
                 queries →{" "}
-                <a href="mailto:ctf@example.org" className="glitch text-primary">
-                  ctf@example.org
+                <a href="mailto:arena@example.org" className="glitch text-primary">
+                  arena@example.org
                 </a>
               </p>
             </div>
