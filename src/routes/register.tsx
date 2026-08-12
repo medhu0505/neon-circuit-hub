@@ -1,20 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
+import { events } from "@/lib/events";
 
 export const Route = createFileRoute("/register")({
+  validateSearch: (search: Record<string, unknown>): { event?: string } => {
+    const raw = search["event"];
+    return typeof raw === "string" ? { event: raw } : {};
+  },
   head: () => ({
     meta: [
-      { title: "Register a Team — Interschool CTF 2026" },
+      { title: "Register a Team — Interschool Arena 2026" },
       {
         name: "description",
         content:
-          "Register a team of up to four students for Interschool CTF 2026. Entry rules, eligibility and contact details for participating schools.",
+          "Register a team for Interschool Arena 2026. Entry rules, eligibility and contact details for participating schools.",
       },
-      { property: "og:title", content: "Register a Team — Interschool CTF 2026" },
+      { property: "og:title", content: "Register a Team — Interschool Arena 2026" },
       {
         property: "og:description",
-        content: "Teams of up to four students. Free entry for all participating schools.",
+        content: "Pick your events and enter a team. Free entry for all participating schools.",
       },
     ],
   }),
@@ -22,21 +27,28 @@ export const Route = createFileRoute("/register")({
 });
 
 const rules = [
-  "Teams of up to four students from the same school.",
+  "Teams must be from the same school; sizes vary by event.",
   "One accompanying teacher or coordinator per school.",
-  "No attacking the scoring infrastructure or other teams.",
-  "Flag sharing between teams means instant disqualification.",
-  "Open-source tooling and the public internet are fair game.",
+  "A student may enter a maximum of three events.",
+  "Briefs are released on the day — no pre-made submissions.",
+  "Judges' decisions are final across all six events.",
 ];
 
 const faqs = [
-  ["Do we need prior CTF experience?", "No. Each track has entry-level challenges and a guided warm-up set."],
-  ["What should we bring?", "One laptop per participant, chargers, and a Linux VM if you have one."],
+  ["Do we need prior competition experience?", "No. Every event has an entry-level bracket and mentors on the floor."],
+  ["What should we bring?", "School ID, a laptop or camera if your event needs one, and chargers."],
   ["Is there an entry fee?", "No. Participation is free; lunch and refreshments are provided."],
 ] as const;
 
 function RegisterPage() {
+  const { event } = Route.useSearch();
   const [sent, setSent] = useState(false);
+  const [selected, setSelected] = useState<string[]>(
+    event && events.some((e) => e.slug === event) ? [event] : [],
+  );
+
+  const toggle = (slug: string) =>
+    setSelected((prev) => (prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]));
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-20">
@@ -65,6 +77,31 @@ function RegisterPage() {
               <Field label="school" placeholder="Placeholder Public School" />
               <Field label="captain_name" placeholder="A. Student" />
               <Field label="email" type="email" placeholder="captain@school.edu" />
+            </div>
+            <div className="mt-5">
+              <label className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                events
+              </label>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {events.map((e) => {
+                  const on = selected.includes(e.slug);
+                  return (
+                    <button
+                      key={e.slug}
+                      type="button"
+                      onClick={() => toggle(e.slug)}
+                      aria-pressed={on}
+                      className={`border px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-shadow ${
+                        on
+                          ? "border-primary bg-primary/10 text-primary shadow-[var(--glow-primary)]"
+                          : "border-border text-muted-foreground hover:border-primary/60 hover:text-primary"
+                      }`}
+                    >
+                      {e.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
             <div className="mt-5">
               <label className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
@@ -113,8 +150,8 @@ function RegisterPage() {
               </dl>
               <p className="mt-6 font-mono text-xs text-muted-foreground">
                 queries →{" "}
-                <a href="mailto:ctf@example.org" className="glitch text-primary">
-                  ctf@example.org
+                <a href="mailto:arena@example.org" className="glitch text-primary">
+                  arena@example.org
                 </a>
               </p>
             </div>

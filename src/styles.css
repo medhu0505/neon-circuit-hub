@@ -102,7 +102,7 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-/* CTF dark cyberpunk theme (single theme, always dark) */
+/* Arena dark cyberpunk theme (single theme, always dark) */
 :root {
   --radius: 0.25rem;
   --background: oklch(0.11 0.018 275);
