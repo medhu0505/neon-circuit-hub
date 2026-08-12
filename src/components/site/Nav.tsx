@@ -4,7 +4,7 @@ import { Menu, X, Terminal } from "lucide-react";
 
 const links = [
   { to: "/", label: "./home" },
-  { to: "/tracks", label: "./tracks" },
+  { to: "/tracks", label: "./events" },
   { to: "/register", label: "./register" },
 ] as const;
 
@@ -17,7 +17,7 @@ export function Nav() {
         <Link to="/" className="glitch flex items-center gap-2 font-mono text-sm font-bold tracking-tight">
           <Terminal className="h-4 w-4 text-primary" />
           <span className="text-primary">INTERSCHOOL</span>
-          <span className="text-foreground">CTF_2026</span>
+          <span className="text-foreground">ARENA_2026</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
