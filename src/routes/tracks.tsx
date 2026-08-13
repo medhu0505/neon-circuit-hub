@@ -1,67 +1,101 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
-import { events } from "@/lib/events";
+import { Binary, Bug, Globe, KeyRound, Radar, Search } from "lucide-react";
 
 export const Route = createFileRoute("/tracks")({
   head: () => ({
     meta: [
-      { title: "Events — Interschool Arena 2026" },
+      { title: "Challenge Tracks — Interschool CTF 2026" },
       {
         name: "description",
         content:
-          "Six events: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Formats, team sizes and the full day timeline.",
+          "Six capture-the-flag tracks: web exploitation, cryptography, reverse engineering, forensics, OSINT and pwn. Full event timeline and scoring rules.",
       },
-      { property: "og:title", content: "Events — Interschool Arena 2026" },
+      { property: "og:title", content: "Challenge Tracks — Interschool CTF 2026" },
       {
         property: "og:description",
-        content: "Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch — six events, one arena.",
+        content: "Web, crypto, reversing, forensics, OSINT and pwn tracks with a 12-hour timeline.",
       },
     ],
   }),
-  component: EventsPage,
+  component: TracksPage,
 });
 
+const tracks = [
+  {
+    icon: Globe,
+    name: "web_exploitation",
+    level: "beginner → hard",
+    desc: "Injection, broken auth, SSRF and client-side trickery on purpose-built sandbox apps.",
+  },
+  {
+    icon: KeyRound,
+    name: "cryptography",
+    level: "medium",
+    desc: "Classical ciphers, weak RNGs, padding oracles and misused primitives.",
+  },
+  {
+    icon: Binary,
+    name: "reverse_engineering",
+    level: "hard",
+    desc: "Static and dynamic analysis of stripped binaries, obfuscated bytecode and firmware blobs.",
+  },
+  {
+    icon: Search,
+    name: "forensics",
+    level: "beginner",
+    desc: "Packet captures, carved disk images, steganography and corrupted file recovery.",
+  },
+  {
+    icon: Radar,
+    name: "osint",
+    level: "beginner",
+    desc: "Trace a fictional persona across archived pages, metadata and public records.",
+  },
+  {
+    icon: Bug,
+    name: "pwn",
+    level: "expert",
+    desc: "Stack smashing, format strings and heap grooming against remote services.",
+  },
+];
+
 const timeline = [
-  ["08:30", "Check-in & registration desk", "Teams collect passes and confirm slots."],
-  ["09:00", "Opening brief", "Rules, judging criteria and the day's schedule."],
-  ["09:30", "Quiz prelims + Film Making brief", "Written prelims run while film teams start shooting."],
-  ["13:00", "Ad Shoot & Online Gaming qualifiers", "Afternoon block opens across both arenas."],
-  ["16:00", "Pitch round + Surprise reveal", "Judging panels convene; the wildcard opens."],
-  ["19:00", "Finals & prize giving", "Grand finals on the main stage, then awards."],
+  ["08:30", "Check-in & rig setup", "Teams verify accounts on the scoreboard."],
+  ["09:00", "Rules brief + warm-up flag", "One free flag to test your tooling."],
+  ["09:30", "Round 1 opens", "All six tracks unlock. Dynamic scoring begins."],
+  ["13:00", "Mid-game surge", "Hint store opens; late-release challenges drop."],
+  ["18:00", "Scoreboard freeze", "Last hour runs blind. No standings shown."],
+  ["19:00", "Flags close & prize giving", "Top three teams present their best solve."],
 ] as const;
 
-function EventsPage() {
+function TracksPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-20">
       <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">// events</p>
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">
+          // categories
+        </p>
         <h1 className="mt-4 text-4xl font-bold md:text-5xl">
-          Six events. <span className="text-primary neon-text">One arena.</span>
+          Six tracks. <span className="text-primary neon-text">One scoreboard.</span>
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Every event is scored independently and rolls up into a single school leaderboard. Enter
-          one, enter all six — the schools that spread wide tend to finish on top.
+          Challenges are jeopardy-style with dynamic scoring — the more teams solve a task, the
+          fewer points it awards. Difficulty labels are indicative for a school-level field.
         </p>
       </Reveal>
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {events.map((e, i) => (
-          <Reveal key={e.slug} delay={i * 70}>
-            <Link
-              to="/events/$slug"
-              params={{ slug: e.slug }}
-              className="glow-card block h-full rounded-md p-6 transition-transform hover:-translate-y-1"
-            >
-              <e.icon className="h-6 w-6 text-primary" />
-              <h2 className="mt-4 font-mono text-lg text-foreground">{e.name}</h2>
+        {tracks.map((t, i) => (
+          <Reveal key={t.name} delay={i * 70}>
+            <article className="glow-card h-full rounded-md p-6">
+              <t.icon className="h-6 w-6 text-primary" />
+              <h2 className="mt-4 font-mono text-lg text-foreground">{t.name}</h2>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-secondary">
-                {e.format} · {e.teamSize}
+                {t.level}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{e.short}</p>
-              <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-primary">
-                view_details →
-              </p>
-            </Link>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t.desc}</p>
+            </article>
           </Reveal>
         ))}
       </div>

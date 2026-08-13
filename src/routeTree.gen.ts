@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as TracksRouteImport } from './routes/tracks'
-import { Route as EventsSlugRouteImport } from './routes/events.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,44 +28,35 @@ const TracksRoute = TracksRouteImport.update({
   path: '/tracks',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventsSlugRoute = EventsSlugRouteImport.update({
-  id: '/events/$slug',
-  path: '/events/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/tracks': typeof TracksRoute
-  '/events/$slug': typeof EventsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/tracks': typeof TracksRoute
-  '/events/$slug': typeof EventsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/tracks': typeof TracksRoute
-  '/events/$slug': typeof EventsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register' | '/tracks' | '/events/$slug'
+  fullPaths: '/' | '/register' | '/tracks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register' | '/tracks' | '/events/$slug'
-  id: '__root__' | '/' | '/register' | '/tracks' | '/events/$slug'
+  to: '/' | '/register' | '/tracks'
+  id: '__root__' | '/' | '/register' | '/tracks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RegisterRoute: typeof RegisterRoute
   TracksRoute: typeof TracksRoute
-  EventsSlugRoute: typeof EventsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,13 +82,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TracksRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/events/$slug': {
-      id: '/events/$slug'
-      path: '/events/$slug'
-      fullPath: '/events/$slug'
-      preLoaderRoute: typeof EventsSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -106,7 +89,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RegisterRoute: RegisterRoute,
   TracksRoute: TracksRoute,
-  EventsSlugRoute: EventsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

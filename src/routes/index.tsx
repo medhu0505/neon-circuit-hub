@@ -1,22 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CodeRain } from "@/components/site/CodeRain";
 import { Reveal } from "@/components/site/Reveal";
-import { Sparkles, Trophy, Users, CalendarClock } from "lucide-react";
-import { events } from "@/lib/events";
+import { Flag, ShieldHalf, Trophy, Users } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Interschool Arena 2026 — Six Events. One Arena." },
+      { title: "Interschool CTF 2026 — Inter-School Hacking Competition" },
       {
         name: "description",
         content:
-          "A one-day inter-school competition across Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Free entry, live leaderboard. Register your school.",
+          "A 12-hour jeopardy-style capture-the-flag for school teams. Six tracks, live scoreboard, zero entry fee. Register your team for Interschool CTF 2026.",
       },
-      { property: "og:title", content: "Interschool Arena 2026" },
+      { property: "og:title", content: "Interschool CTF 2026" },
       {
         property: "og:description",
-        content: "Six events, one arena. Quiz, film, ads, gaming, pitch — and one mystery challenge.",
+        content: "A 12-hour inter-school capture-the-flag competition. Six tracks, live scoreboard.",
       },
     ],
   }),
@@ -25,23 +24,23 @@ export const Route = createFileRoute("/")({
 
 const stats = [
   { icon: Users, value: "48", label: "teams" },
-  { icon: Sparkles, value: "6", label: "events" },
+  { icon: Flag, value: "60+", label: "flags" },
   { icon: Trophy, value: "₹2L", label: "prize pool" },
-  { icon: CalendarClock, value: "12h", label: "one day" },
+  { icon: ShieldHalf, value: "12h", label: "runtime" },
 ];
 
 const highlights = [
   {
-    title: "one_leaderboard",
-    body: "Every event feeds a single school standing. Win a category or grind points across all six — both paths reach the podium.",
+    title: "jeopardy_format",
+    body: "Independent challenges across six categories with dynamic scoring that decays as more teams solve.",
   },
   {
-    title: "judged_live",
-    body: "Industry judges, on-stage finals and results announced the same evening. No waiting weeks for a verdict.",
+    title: "live_scoreboard",
+    body: "Real-time standings, first-blood callouts and a final-hour freeze that keeps the ending unreadable.",
   },
   {
-    title: "built_for_students",
-    body: "No prior competition experience needed. Briefs are handed out on the day and mentors stay on the floor throughout.",
+    title: "school_first",
+    body: "Built for students with no prior CTF experience — guided warm-ups, a hint store and on-floor mentors.",
   },
 ];
 
@@ -54,21 +53,21 @@ function Index() {
         <div className="relative mx-auto max-w-6xl px-5 py-28 md:py-40">
           <Reveal>
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-secondary">
-              // inter-school competition 2026
+              // inter-school capture the flag
             </p>
           </Reveal>
           <Reveal delay={90}>
             <h1 className="mt-6 text-5xl font-bold leading-[0.95] md:text-8xl">
-              <span className="text-primary neon-text">SIX EVENTS.</span>
+              <span className="text-primary neon-text">INTERSCHOOL</span>
               <br />
-              ONE ARENA
+              CTF_2026
               <span className="caret text-secondary">_</span>
             </h1>
           </Reveal>
           <Reveal delay={180}>
             <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              One day. Six events. Quiz, film, advertising, gaming, pitching — and one challenge
-              nobody sees coming. Bring your school. Take the arena.
+              Twelve hours. Six tracks. One scoreboard. Break the box, read the packet, own the
+              binary — then plant your flag before the freeze.
             </p>
           </Reveal>
           <Reveal delay={260}>
@@ -83,7 +82,7 @@ function Index() {
                 to="/tracks"
                 className="glitch border border-secondary/60 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-secondary transition-shadow hover:shadow-[var(--glow-secondary)]"
               >
-                view_events
+                view_tracks
               </Link>
             </div>
           </Reveal>
@@ -108,61 +107,25 @@ function Index() {
 
       <section className="mx-auto max-w-6xl px-5 py-24">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-3xl font-bold md:text-4xl">
-              <span className="text-primary">$</span> ls events/
-            </h2>
-            <Link to="/tracks" className="glitch font-mono text-xs uppercase tracking-widest text-secondary">
-              all_events →
-            </Link>
-          </div>
+          <h2 className="text-3xl font-bold md:text-4xl">
+            <span className="text-primary">$</span> whoami
+          </h2>
+          <p className="mt-4 max-w-2xl text-muted-foreground">
+            Interschool CTF is a student-run security competition hosted by the school computing
+            club. Teams of up to four go head-to-head on live infrastructure built and broken by
+            students.
+          </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {events.map((e, i) => (
-            <Reveal key={e.slug} delay={i * 70}>
-              <Link
-                to="/events/$slug"
-                params={{ slug: e.slug }}
-                className="glow-card block h-full rounded-md p-6 transition-transform hover:-translate-y-1"
-              >
-                <e.icon className="h-6 w-6 text-primary" />
-                <h3 className="mt-4 font-mono text-lg text-foreground">{e.name}</h3>
-                <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-secondary">
-                  {e.format} · {e.teamSize}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{e.short}</p>
-                <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-primary">
-                  view_details →
-                </p>
-              </Link>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {highlights.map((h, i) => (
+            <Reveal key={h.title} delay={i * 90}>
+              <article className="glow-card h-full rounded-md p-7">
+                <h3 className="font-mono text-lg text-primary">{h.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
+              </article>
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      <section className="border-t border-border/60 bg-card/20">
-        <div className="mx-auto max-w-6xl px-5 py-24">
-          <Reveal>
-            <h2 className="text-3xl font-bold md:text-4xl">
-              <span className="text-primary">$</span> whoami
-            </h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              Interschool Arena is a student-run competition hosted by the school's culture and tech
-              societies. Teams from across the city go head-to-head on stage, on set and on screen.
-            </p>
-          </Reveal>
-
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {highlights.map((h, i) => (
-              <Reveal key={h.title} delay={i * 90}>
-                <article className="glow-card h-full rounded-md p-7">
-                  <h3 className="font-mono text-lg text-primary">{h.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -170,11 +133,11 @@ function Index() {
         <div className="mx-auto max-w-6xl px-5 py-24 text-center">
           <Reveal>
             <h2 className="text-3xl font-bold md:text-5xl">
-              Ready to <span className="text-secondary">take the floor?</span>
+              Ready to <span className="text-secondary">exploit</span> something?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Registration is free and open to every participating school. Pick your events and put
-              a team together.
+              Registration is free and open to every participating school. Bring a laptop and a
+              stubborn streak.
             </p>
             <Link
               to="/register"
