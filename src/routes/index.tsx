@@ -52,7 +52,7 @@ function Index() {
   return (
     <>
       <section className="noise relative overflow-hidden border-b border-border/60">
-        <ShaderField />
+        <ShaderField object />
         <CodeRain />
         <div className="grid-drift pointer-events-none absolute inset-0 opacity-70" />
         <div className="pointer-events-none absolute left-5 top-10 h-16 w-16 border-l border-t border-dashed border-secondary/30" />
@@ -112,9 +112,9 @@ function Index() {
             <span className="text-secondary">//</span> about quantum
           </h2>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Quantum is a student-run inter-school fest, running as Quantum v2.0. Teams from
-            across the city go head-to-head across six creative and competitive events, all run and
-            judged on the day.
+            Quantum is a student-run inter-school fest, running as Quantum v2.0. Teams from across
+            the city go head-to-head across six creative and competitive events, all run and judged
+            on the day.
           </p>
         </Reveal>
 

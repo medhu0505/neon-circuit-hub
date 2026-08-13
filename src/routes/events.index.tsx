@@ -1,17 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
+import { PageHero } from "@/components/site/PageHero";
 import { events } from "@/lib/events";
 
 export const Route = createFileRoute("/events/")({
   head: () => ({
     meta: [
-      { title: "Events — Quantum 2026" },
+      { title: "Events — Quantum v2.0" },
       {
         name: "description",
         content:
-          "Six events at Quantum 2026: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Formats, timings and eligibility for every category.",
+          "Six events at Quantum v2.0: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Formats, timings and eligibility for every category.",
       },
-      { property: "og:title", content: "Events — Quantum 2026" },
+      { property: "og:title", content: "Events — Quantum v2.0" },
       {
         property: "og:description",
         content: "Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch.",
@@ -25,20 +26,22 @@ export const Route = createFileRoute("/events/")({
 
 function EventsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-20">
-      <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">// events</p>
-        <h1 className="mt-4 text-4xl font-bold md:text-5xl">
-          Six events. <span className="wordmark">One stage.</span>
-        </h1>
-        <div className="dashed-motif mt-6 w-40" />
-        <p className="mt-6 max-w-2xl text-muted-foreground">
-          Pick your lane — or enter more than one. Every event runs independently, with its own
-          format, panel and points feeding the overall school tally.
-        </p>
-      </Reveal>
+    <>
+      <PageHero>
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">// events</p>
+          <h1 className="mt-4 text-4xl font-bold md:text-5xl">
+            Six events. <span className="wordmark">One stage.</span>
+          </h1>
+          <div className="dashed-motif mt-6 w-40" />
+          <p className="mt-6 max-w-2xl text-muted-foreground">
+            Pick your lane — or enter more than one. Every event runs independently, with its own
+            format, panel and points feeding the overall school tally.
+          </p>
+        </Reveal>
+      </PageHero>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-5 px-5 py-20 md:grid-cols-2 lg:grid-cols-3">
         {events.map((e, i) => (
           <Reveal key={e.slug} delay={i * 70}>
             <Link
@@ -59,6 +62,6 @@ function EventsPage() {
           </Reveal>
         ))}
       </div>
-    </div>
+    </>
   );
 }
