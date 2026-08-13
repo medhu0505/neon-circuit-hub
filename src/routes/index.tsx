@@ -2,20 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CodeRain } from "@/components/site/CodeRain";
 import { Reveal } from "@/components/site/Reveal";
 import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
+import { RegisterNowButton } from "@/components/site/RegisterChoice";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Quantum 2026 — Inter-School Tech & Culture Fest" },
+      { title: "Quantum v2.0 — Inter-School Tech & Culture Fest" },
       {
         name: "description",
         content:
-          "Quantum 2026 — the inter-school fest with six events: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Free entry, live scoring, one stage.",
+          "Quantum v2.0 — the inter-school fest with six events: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Free entry, live scoring, one stage.",
       },
-      { property: "og:title", content: "Quantum 2026" },
+      { property: "og:title", content: "Quantum v2.0" },
       {
         property: "og:description",
-        content: "Six events. One stage. The inter-school fest returns as Quantum 2026.",
+        content: "Six events. One stage. The inter-school fest returns as Quantum v2.0.",
       },
       { property: "og:url", content: "/" },
     ],
@@ -64,7 +65,7 @@ function Index() {
           <Reveal delay={90}>
             <h1 className="rgb-split mt-6 text-6xl leading-[0.9] md:text-9xl">
               <span className="wordmark">QUANTUM</span>
-              <span className="ml-3 font-mono text-2xl text-secondary md:text-4xl">2026</span>
+              <span className="ml-3 font-mono text-2xl text-secondary md:text-4xl">v2.0</span>
             </h1>
           </Reveal>
           <Reveal delay={180}>
@@ -75,12 +76,7 @@ function Index() {
           </Reveal>
           <Reveal delay={260}>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                to="/register"
-                className="glitch border border-primary bg-primary/10 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
-              >
-                register team
-              </Link>
+              <RegisterNowButton className="glitch border border-primary bg-primary/10 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]" />
               <Link
                 to="/events"
                 className="glitch border border-secondary/60 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-secondary transition-shadow hover:shadow-[var(--glow-secondary)]"
@@ -108,13 +104,13 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-24">
+      <section id="about" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24">
         <Reveal>
           <h2 className="text-3xl font-bold md:text-4xl">
             <span className="text-secondary">//</span> about quantum
           </h2>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Quantum is a student-run inter-school fest, returning after Quantum 2.0. Teams from
+            Quantum is a student-run inter-school fest, running as Quantum v2.0. Teams from
             across the city go head-to-head across six creative and competitive events, all run and
             judged on the day.
           </p>
@@ -142,12 +138,7 @@ function Index() {
               Registration is free and open to every participating school. Bring a crew and a
               stubborn streak.
             </p>
-            <Link
-              to="/register"
-              className="glitch mt-9 inline-block border border-primary bg-primary/10 px-9 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
-            >
-              register team
-            </Link>
+            <RegisterNowButton className="glitch mt-9 inline-block border border-primary bg-primary/10 px-9 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]" />
           </Reveal>
         </div>
       </section>
