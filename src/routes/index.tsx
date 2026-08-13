@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CodeRain } from "@/components/site/CodeRain";
+import { ShaderField } from "@/components/site/ShaderField";
 import { Reveal } from "@/components/site/Reveal";
 import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 import { RegisterNowButton } from "@/components/site/RegisterChoice";
@@ -51,6 +52,7 @@ function Index() {
   return (
     <>
       <section className="noise relative overflow-hidden border-b border-border/60">
+        <ShaderField />
         <CodeRain />
         <div className="grid-drift pointer-events-none absolute inset-0 opacity-70" />
         <div className="pointer-events-none absolute left-5 top-10 h-16 w-16 border-l border-t border-dashed border-secondary/30" />
