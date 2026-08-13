@@ -1,73 +1,76 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CodeRain } from "@/components/site/CodeRain";
 import { Reveal } from "@/components/site/Reveal";
-import { Flag, ShieldHalf, Trophy, Users } from "lucide-react";
+import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Interschool CTF 2026 — Inter-School Hacking Competition" },
+      { title: "Quantum 2026 — Inter-School Tech & Culture Fest" },
       {
         name: "description",
         content:
-          "A 12-hour jeopardy-style capture-the-flag for school teams. Six tracks, live scoreboard, zero entry fee. Register your team for Interschool CTF 2026.",
+          "Quantum 2026 — the inter-school fest with six events: Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Free entry, live scoring, one stage.",
       },
-      { property: "og:title", content: "Interschool CTF 2026" },
+      { property: "og:title", content: "Quantum 2026" },
       {
         property: "og:description",
-        content: "A 12-hour inter-school capture-the-flag competition. Six tracks, live scoreboard.",
+        content: "Six events. One stage. The inter-school fest returns as Quantum 2026.",
       },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });
 
 const stats = [
   { icon: Users, value: "48", label: "teams" },
-  { icon: Flag, value: "60+", label: "flags" },
+  { icon: Clapperboard, value: "6", label: "events" },
   { icon: Trophy, value: "₹2L", label: "prize pool" },
-  { icon: ShieldHalf, value: "12h", label: "runtime" },
+  { icon: Sparkles, value: "2d", label: "runtime" },
 ];
 
 const highlights = [
   {
-    title: "jeopardy_format",
-    body: "Independent challenges across six categories with dynamic scoring that decays as more teams solve.",
+    title: "six formats",
+    body: "From rapid-fire trivia to a full short-film shoot — six independent events, each with its own panel and scoring.",
   },
   {
-    title: "live_scoreboard",
-    body: "Real-time standings, first-blood callouts and a final-hour freeze that keeps the ending unreadable.",
+    title: "live scoreboard",
+    body: "Real-time school standings across every event, with a final-hour freeze that keeps the ending unreadable.",
   },
   {
-    title: "school_first",
-    body: "Built for students with no prior CTF experience — guided warm-ups, a hint store and on-floor mentors.",
+    title: "school first",
+    body: "Built for students entering their first fest — clear briefs, on-floor coordinators and no entry fee.",
   },
 ];
 
 function Index() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border/60">
+      <section className="noise relative overflow-hidden border-b border-border/60">
         <CodeRain />
         <div className="grid-drift pointer-events-none absolute inset-0 opacity-70" />
+        <div className="pointer-events-none absolute left-5 top-10 h-16 w-16 border-l border-t border-dashed border-secondary/30" />
+        <div className="pointer-events-none absolute bottom-10 right-5 h-16 w-16 border-b border-r border-dashed border-primary/30" />
+        <div className="pointer-events-none absolute right-16 top-16 h-1.5 w-1.5 rounded-full bg-secondary/60" />
         <div className="relative mx-auto max-w-6xl px-5 py-28 md:py-40">
           <Reveal>
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-secondary">
-              // inter-school capture the flag
+              // inter-school tech & culture fest
             </p>
           </Reveal>
           <Reveal delay={90}>
-            <h1 className="mt-6 text-5xl font-bold leading-[0.95] md:text-8xl">
-              <span className="text-primary neon-text">INTERSCHOOL</span>
-              <br />
-              CTF_2026
-              <span className="caret text-secondary">_</span>
+            <h1 className="rgb-split mt-6 text-6xl leading-[0.9] md:text-9xl">
+              <span className="wordmark">QUANTUM</span>
+              <span className="ml-3 font-mono text-2xl text-secondary md:text-4xl">2026</span>
             </h1>
           </Reveal>
           <Reveal delay={180}>
             <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Twelve hours. Six tracks. One scoreboard. Break the box, read the packet, own the
-              binary — then plant your flag before the freeze.
+              Two days. Six events. One stage. Quiz, film, advertising, gaming, pitching — and one
+              challenge nobody sees coming.
             </p>
           </Reveal>
           <Reveal delay={260}>
@@ -76,20 +79,20 @@ function Index() {
                 to="/register"
                 className="glitch border border-primary bg-primary/10 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
               >
-                register_team
+                register team
               </Link>
               <Link
-                to="/tracks"
+                to="/events"
                 className="glitch border border-secondary/60 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-secondary transition-shadow hover:shadow-[var(--glow-secondary)]"
               >
-                view_tracks
+                view events
               </Link>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="border-b border-border/60 bg-card/30">
+      <section className="noise border-b border-border/60 bg-card/30">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px px-5 md:grid-cols-4">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 70}>
@@ -108,12 +111,12 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-24">
         <Reveal>
           <h2 className="text-3xl font-bold md:text-4xl">
-            <span className="text-primary">$</span> whoami
+            <span className="text-secondary">//</span> about quantum
           </h2>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Interschool CTF is a student-run security competition hosted by the school computing
-            club. Teams of up to four go head-to-head on live infrastructure built and broken by
-            students.
+            Quantum is a student-run inter-school fest, returning after Quantum 2.0. Teams from
+            across the city go head-to-head across six creative and competitive events, all run and
+            judged on the day.
           </p>
         </Reveal>
 
@@ -121,7 +124,7 @@ function Index() {
           {highlights.map((h, i) => (
             <Reveal key={h.title} delay={i * 90}>
               <article className="glow-card h-full rounded-md p-7">
-                <h3 className="font-mono text-lg text-primary">{h.title}</h3>
+                <h3 className="text-xl font-bold tracking-tight text-primary">{h.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
               </article>
             </Reveal>
@@ -129,21 +132,21 @@ function Index() {
         </div>
       </section>
 
-      <section className="border-t border-border/60">
+      <section className="noise border-t border-border/60">
         <div className="mx-auto max-w-6xl px-5 py-24 text-center">
           <Reveal>
             <h2 className="text-3xl font-bold md:text-5xl">
-              Ready to <span className="text-secondary">exploit</span> something?
+              Ready to <span className="text-secondary">compete</span>?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Registration is free and open to every participating school. Bring a laptop and a
+              Registration is free and open to every participating school. Bring a crew and a
               stubborn streak.
             </p>
             <Link
               to="/register"
               className="glitch mt-9 inline-block border border-primary bg-primary/10 px-9 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
             >
-              register_team
+              register team
             </Link>
           </Reveal>
         </div>

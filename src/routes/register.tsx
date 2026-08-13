@@ -5,33 +5,36 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Register a Team — Interschool CTF 2026" },
+      { title: "Register a Team — Quantum 2026" },
       {
         name: "description",
         content:
-          "Register a team of up to four students for Interschool CTF 2026. Entry rules, eligibility and contact details for participating schools.",
+          "Register your school team for Quantum 2026 across Quiz, Film Making, Ad Shoot, Surprise, Online Gaming and Pitch. Entry rules and eligibility.",
       },
-      { property: "og:title", content: "Register a Team — Interschool CTF 2026" },
+      { property: "og:title", content: "Register a Team — Quantum 2026" },
       {
         property: "og:description",
-        content: "Teams of up to four students. Free entry for all participating schools.",
+        content: "Free entry for all participating schools across six events.",
       },
+      { property: "og:url", content: "/register" },
     ],
+    links: [{ rel: "canonical", href: "/register" }],
   }),
   component: RegisterPage,
 });
 
 const rules = [
-  "Teams of up to four students from the same school.",
+  "Team sizes vary by event — check the event page before entering.",
+  "All members must be from the same school.",
   "One accompanying teacher or coordinator per school.",
-  "No attacking the scoring infrastructure or other teams.",
-  "Flag sharing between teams means instant disqualification.",
-  "Open-source tooling and the public internet are fair game.",
+  "Entries may be capped per school if slots fill up.",
+  "Judges' decisions are final across every event.",
 ];
 
 const faqs = [
-  ["Do we need prior CTF experience?", "No. Each track has entry-level challenges and a guided warm-up set."],
-  ["What should we bring?", "One laptop per participant, chargers, and a Linux VM if you have one."],
+  ["Do we need prior experience?", "No. Every event has an entry-level brief and on-floor coordinators."],
+  ["Can we enter more than one event?", "Yes, as long as the timings on the event pages don't clash."],
+  ["What should we bring?", "School ID, chargers, and any gear your event needs (camera, peripherals)."],
   ["Is there an entry fee?", "No. Participation is free; lunch and refreshments are provided."],
 ] as const;
 
@@ -43,7 +46,7 @@ function RegisterPage() {
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">// enrolment</p>
         <h1 className="mt-4 text-4xl font-bold md:text-5xl">
-          Register your <span className="text-primary neon-text">team</span>
+          Register your <span className="wordmark">team</span>
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Draft form — submissions are not stored yet. Final registration opens once the event date
@@ -61,7 +64,7 @@ function RegisterPage() {
             className="glow-card rounded-md p-7"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="team_name" placeholder="null_terminators" />
+              <Field label="team_name" placeholder="Team Placeholder" />
               <Field label="school" placeholder="Placeholder Public School" />
               <Field label="captain_name" placeholder="A. Student" />
               <Field label="email" type="email" placeholder="captain@school.edu" />
@@ -72,7 +75,7 @@ function RegisterPage() {
               </label>
               <textarea
                 rows={4}
-                placeholder="One name per line (max 4)"
+                placeholder="One name per line"
                 className="mt-2 w-full rounded-sm border border-input bg-background/60 px-3 py-2 font-mono text-sm text-foreground outline-none placeholder:text-muted-foreground/50 focus:border-primary/70 focus:shadow-[var(--glow-primary)]"
               />
             </div>
@@ -80,7 +83,7 @@ function RegisterPage() {
               type="submit"
               className="glitch mt-6 w-full border border-primary bg-primary/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
             >
-              {sent ? "// received — we'll be in touch" : "submit_registration"}
+              {sent ? "// received — we'll be in touch" : "submit registration"}
             </button>
           </form>
         </Reveal>
@@ -113,8 +116,8 @@ function RegisterPage() {
               </dl>
               <p className="mt-6 font-mono text-xs text-muted-foreground">
                 queries →{" "}
-                <a href="mailto:ctf@example.org" className="glitch text-primary">
-                  ctf@example.org
+                <a href="mailto:quantum@example.org" className="glitch text-primary">
+                  quantum@example.org
                 </a>
               </p>
             </div>
