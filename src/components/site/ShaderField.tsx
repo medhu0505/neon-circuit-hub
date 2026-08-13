@@ -57,8 +57,13 @@ void main() {
   vec2 w = vec2(fbm(q * 1.6 + t), fbm(q * 1.6 + vec2(5.2, 1.3) - t));
   float f = fbm(q * 2.2 + w * 1.4 + vec2(0.0, t * 1.5));
 
+  // thin bright thread along the ridge of the field, with a soft halo
   float ridge = abs(f - 0.5);
-  float fil = smoothstep(0.065, 0.0, ridge);
+  float core = smoothstep(0.020, 0.0, ridge);
+  float halo = smoothstep(0.09, 0.0, ridge) * 0.16;
+
+  // large slow mask so the field breathes instead of filling the frame
+  float mask = smoothstep(0.30, 0.72, fbm(q * 0.9 - t * 0.5));
 
   // two slow-drifting light volumes
   float g1 = exp(-3.5 * length(uv - vec2(-0.45 + 0.09 * sin(t * 3.0), 0.16)));
@@ -68,14 +73,23 @@ void main() {
   vec3 cyan = vec3(0.25, 0.79, 0.90);
   vec3 violet = vec3(0.55, 0.27, 0.94);
 
-  vec3 col = vec3(0.0);
-  col += pink * fil * (0.55 + 0.45 * sin(f * 6.0 + t * 4.0));
-  col += cyan * fil * 0.35 * (0.5 + 0.5 * cos(f * 5.0 - t * 3.0));
-  col += violet * (g1 * 0.5 + g2 * 0.34);
-  col += cyan * g2 * 0.18;
+  // hue splits across the frame so pink and cyan are both always present —
+  // summing them per-pixel would just desaturate to white
+  vec3 tint = mix(pink, cyan, smoothstep(-0.45, 0.45, uv.x + 0.3 * sin(t * 0.7) + 0.4 * (f - 0.5)));
 
-  col += hash(gl_FragCoord.xy + fract(u_time)) * 0.035;
-  col *= smoothstep(1.3, 0.15, length(uv));
+  // the hero copy lives left-of-centre, vertically middle — hold the field back
+  // there so the wordmark and buttons always read cleanly
+  float leftness = 1.0 - smoothstep(-0.55, 0.45, uv.x);
+  float centreness = exp(-pow(uv.y / 0.34, 2.0));
+  float textSafe = 1.0 - 0.62 * leftness * centreness;
+
+  vec3 col = vec3(0.0);
+  col += tint * (core * 0.55 + halo) * mask * textSafe;
+  col += violet * (g1 * 0.24 + g2 * 0.20);
+  col += cyan * g2 * 0.10;
+
+  col += hash(gl_FragCoord.xy + fract(u_time)) * 0.018;
+  col *= smoothstep(1.35, 0.2, length(uv));
 
   gl_FragColor = vec4(col, 1.0);
 }
