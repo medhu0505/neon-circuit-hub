@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Terminal } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 const links = [
-  { to: "/", label: "./home" },
-  { to: "/tracks", label: "./tracks" },
-  { to: "/register", label: "./register" },
+  { to: "/", label: "home" },
+  { to: "/events", label: "events" },
+  { to: "/register", label: "register" },
 ] as const;
 
 export function Nav() {
@@ -14,10 +14,10 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link to="/" className="glitch flex items-center gap-2 font-mono text-sm font-bold tracking-tight">
-          <Terminal className="h-4 w-4 text-primary" />
-          <span className="text-primary">INTERSCHOOL</span>
-          <span className="text-foreground">CTF_2026</span>
+        <Link to="/" className="glitch flex items-center gap-2 text-lg tracking-tight">
+          <Sparkles className="h-4 w-4 text-secondary" />
+          <span className="wordmark text-xl">QUANTUM</span>
+          <span className="font-mono text-[11px] text-muted-foreground">2026</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -36,7 +36,7 @@ export function Nav() {
             to="/register"
             className="glitch border border-primary/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-shadow hover:shadow-[var(--glow-primary)]"
           >
-            join_now
+            join now
           </Link>
         </div>
 
