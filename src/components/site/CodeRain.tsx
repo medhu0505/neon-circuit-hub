@@ -31,14 +31,18 @@ export function CodeRain() {
       if (t - last < 70) return;
       last = t;
       const { width, height } = canvas.getBoundingClientRect();
-      ctx.fillStyle = "rgba(10, 10, 15, 0.16)";
+      ctx.fillStyle = "rgba(10, 6, 18, 0.16)";
       ctx.fillRect(0, 0, width, height);
       ctx.font = "13px 'JetBrains Mono', monospace";
       for (let i = 0; i < cols; i++) {
         const char = chars[Math.floor(Math.random() * chars.length)] ?? "0";
         const y = (drops[i] ?? 0) * 16;
         ctx.fillStyle =
-          Math.random() > 0.94 ? "rgba(168,85,247,0.55)" : "rgba(57,255,20,0.28)";
+          Math.random() > 0.9
+            ? "rgba(34,211,238,0.35)"
+            : Math.random() > 0.5
+              ? "rgba(236,72,153,0.3)"
+              : "rgba(139,92,246,0.3)";
         ctx.fillText(char, i * 16, y);
         if (y > height && Math.random() > 0.975) drops[i] = 0;
         drops[i] = (drops[i] ?? 0) + 1;

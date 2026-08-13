@@ -102,31 +102,39 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-/* CTF dark cyberpunk theme (single theme, always dark) */
+/* QUANTUM — glitch-poster theme (single theme, always dark) */
 :root {
   --radius: 0.25rem;
-  --background: oklch(0.11 0.018 275);
-  --foreground: oklch(0.95 0.01 200);
-  --card: oklch(0.145 0.022 275);
-  --card-foreground: oklch(0.95 0.01 200);
-  --popover: oklch(0.145 0.022 275);
-  --popover-foreground: oklch(0.95 0.01 200);
-  --primary: oklch(0.87 0.24 145);
-  --primary-foreground: oklch(0.12 0.02 275);
-  --secondary: oklch(0.65 0.24 305);
-  --secondary-foreground: oklch(0.97 0.01 300);
-  --muted: oklch(0.2 0.025 275);
-  --muted-foreground: oklch(0.7 0.03 260);
-  --accent: oklch(0.65 0.24 305);
+  --background: oklch(0.1 0.032 300);
+  --foreground: oklch(0.95 0.012 300);
+  --card: oklch(0.145 0.038 300);
+  --card-foreground: oklch(0.95 0.012 300);
+  --popover: oklch(0.145 0.038 300);
+  --popover-foreground: oklch(0.95 0.012 300);
+  --primary: oklch(0.7 0.194 4);
+  --primary-foreground: oklch(0.12 0.03 300);
+  --secondary: oklch(0.79 0.134 211);
+  --secondary-foreground: oklch(0.12 0.03 300);
+  --muted: oklch(0.2 0.04 300);
+  --muted-foreground: oklch(0.72 0.035 295);
+  --accent: oklch(0.61 0.219 293);
   --accent-foreground: oklch(0.97 0.01 300);
   --destructive: oklch(0.62 0.24 25);
   --destructive-foreground: oklch(0.97 0.01 300);
-  --border: oklch(0.87 0.24 145 / 18%);
-  --input: oklch(0.87 0.24 145 / 22%);
-  --ring: oklch(0.87 0.24 145 / 60%);
-  --grid-line: oklch(0.87 0.24 145 / 7%);
-  --glow-primary: 0 0 24px oklch(0.87 0.24 145 / 35%);
-  --glow-secondary: 0 0 24px oklch(0.65 0.24 305 / 40%);
+  --border: oklch(0.61 0.219 293 / 24%);
+  --input: oklch(0.61 0.219 293 / 28%);
+  --ring: oklch(0.7 0.194 4 / 60%);
+  --violet: oklch(0.61 0.219 293);
+  --indigo: oklch(0.585 0.204 277);
+  --grid-line: oklch(0.61 0.219 293 / 8%);
+  --glow-primary: 0 0 26px oklch(0.7 0.194 4 / 35%);
+  --glow-secondary: 0 0 26px oklch(0.79 0.134 211 / 35%);
+  --gradient-wordmark: linear-gradient(
+    100deg,
+    oklch(0.7 0.194 4),
+    oklch(0.61 0.219 293) 55%,
+    oklch(0.585 0.204 277)
+  );
 }
 
 .dark {
@@ -222,12 +230,44 @@
 }
 
 @utility neon-text {
-  text-shadow: 0 0 18px oklch(0.87 0.24 145 / 45%);
+  text-shadow: 0 0 22px oklch(0.7 0.194 4 / 45%);
+}
+
+@utility wordmark {
+  background-image: var(--gradient-wordmark);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+}
+
+@utility rgb-split {
+  position: relative;
+  text-shadow:
+    2px 0 oklch(0.7 0.194 4 / 45%),
+    -2px 0 oklch(0.79 0.134 211 / 40%);
+  animation: rgb-split-drift 3.6s steps(3, end) infinite;
+}
+
+@utility noise {
+  position: relative;
+}
+
+@utility dashed-motif {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.79 0.134 211 / 22%) 0 6px,
+      transparent 6px 14px
+    );
+  height: 1px;
 }
 
 @utility glow-card {
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, oklch(0.16 0.024 275), oklch(0.13 0.02 275));
+  background: linear-gradient(180deg, oklch(0.16 0.04 300), oklch(0.125 0.032 300));
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease,
@@ -265,15 +305,45 @@
 
 @layer components {
   .glow-card:hover {
-    border-color: oklch(0.87 0.24 145 / 55%);
+    border-color: oklch(0.7 0.194 4 / 55%);
     box-shadow: var(--glow-primary);
     transform: translateY(-4px);
   }
 
   .glitch:hover {
     text-shadow:
-      1.5px 0 oklch(0.65 0.24 305),
-      -1.5px 0 oklch(0.87 0.24 145);
+      1.5px 0 oklch(0.79 0.134 211),
+      -1.5px 0 oklch(0.7 0.194 4);
     animation: glitch-shift 0.28s steps(2, end) infinite;
+  }
+
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.28;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes rgb-split-drift {
+  0%,
+  92%,
+  100% {
+    text-shadow:
+      2px 0 oklch(0.7 0.194 4 / 45%),
+      -2px 0 oklch(0.79 0.134 211 / 40%);
+  }
+  94% {
+    text-shadow:
+      6px 0 oklch(0.7 0.194 4 / 65%),
+      -5px 0 oklch(0.79 0.134 211 / 55%);
+  }
+  97% {
+    text-shadow:
+      -4px 0 oklch(0.7 0.194 4 / 55%),
+      4px 0 oklch(0.79 0.134 211 / 45%);
   }
 }

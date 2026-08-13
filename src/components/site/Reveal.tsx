@@ -26,6 +26,9 @@ export function Reveal({
       { threshold: 0.15 },
     );
     io.observe(el);
+    // Fallback: reveal immediately if already within the viewport on mount.
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) setShown(true);
     return () => io.disconnect();
   }, []);
 
