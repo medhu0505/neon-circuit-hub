@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as TracksRouteImport } from './routes/tracks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +22,31 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TracksRoute = TracksRouteImport.update({
-  id: '/tracks',
-  path: '/tracks',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
-  '/tracks': typeof TracksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
-  '/tracks': typeof TracksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
-  '/tracks': typeof TracksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register' | '/tracks'
+  fullPaths: '/' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register' | '/tracks'
-  id: '__root__' | '/' | '/register' | '/tracks'
+  to: '/' | '/register'
+  id: '__root__' | '/' | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RegisterRoute: typeof RegisterRoute
-  TracksRoute: typeof TracksRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,20 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tracks': {
-      id: '/tracks'
-      path: '/tracks'
-      fullPath: '/tracks'
-      preLoaderRoute: typeof TracksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RegisterRoute: RegisterRoute,
-  TracksRoute: TracksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
