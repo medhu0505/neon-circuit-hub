@@ -95,12 +95,7 @@ export function RegisterNowButton({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={`btn-glitch ${className ?? ""}`}
-        data-text={typeof children === "string" ? children : undefined}
-      >
+      <button type="button" onClick={() => setOpen(true)} className={`glitch ${className ?? ""}`}>
         {children}
       </button>
       <RegisterChoiceModal open={open} onClose={() => setOpen(false)} />

@@ -51,8 +51,7 @@ export function Nav() {
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="menu"
           aria-expanded={open}
-          className="btn-glitch display-face flex items-center gap-2 px-2 py-1 text-lg tracking-[0.16em] mix-blend-difference"
-          data-text="QUANTUM V2.0"
+          className="glitch display-face flex items-center gap-2 px-2 py-1 text-lg tracking-[0.16em] mix-blend-difference"
         >
           <span className="font-bold text-white">QUANTUM</span>
           <span className="text-white/70">V2.0</span>
@@ -88,7 +87,7 @@ export function Nav() {
 
       {/* register */}
       <div className="fixed right-4 top-4 z-50 md:right-7 md:top-6">
-        <RegisterNowButton className="btn-glitch pill border border-secondary/70 bg-background/40 px-6 py-2.5 font-mono text-xs uppercase tracking-[0.2em] text-secondary backdrop-blur-md hover:border-secondary hover:shadow-[var(--glow-secondary)]">
+        <RegisterNowButton className="glitch pill border border-secondary/70 bg-background/40 px-6 py-2.5 font-mono text-xs uppercase tracking-[0.2em] text-secondary backdrop-blur-md hover:border-secondary hover:shadow-[var(--glow-secondary)]">
           register
         </RegisterNowButton>
       </div>

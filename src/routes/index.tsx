@@ -88,8 +88,7 @@ function Index() {
               <RegisterNowButton className="pill-solid px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em]" />
               <Link
                 to="/events"
-                data-text="explore events"
-                className="btn-glitch pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
+                className="glitch pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
               >
                 explore events
               </Link>

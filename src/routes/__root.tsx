@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "../components/site/Nav";
 import { Footer } from "../components/site/Footer";
 import { Starfield } from "../components/site/Starfield";
+import { Cursor } from "../components/site/Cursor";
+import { RouteTransition } from "../components/site/RouteTransition";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +127,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
         <Starfield />
+        <Cursor />
+        <RouteTransition />
         <Nav />
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}

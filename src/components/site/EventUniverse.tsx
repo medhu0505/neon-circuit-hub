@@ -21,12 +21,22 @@ import { events } from "@/lib/events";
  * otherwise the outer planet (Pitch) is clipped at the top and bottom of its
  * orbit. 40% leaves that headroom.
  */
+/**
+ * radius is % of container height from the centre.
+ *
+ * Two hard constraints:
+ *  - the innermost orbit must clear the sun. The sun is 64px across, so its
+ *    radius is ~6% of a 550px stage; anything under ~13% puts a planet inside
+ *    the star, which is what made this look broken.
+ *  - the outermost must stay under ~42% so the planet and its label never
+ *    clip the top or bottom of the frame.
+ */
 const PLANETS = [
-  { radius: 12, seconds: 28, size: 10, tint: "oklch(0.79 0.134 211)" },
-  { radius: 18, seconds: 40, size: 15, tint: "oklch(0.7 0.194 4)" },
-  { radius: 24, seconds: 55, size: 11, tint: "oklch(0.61 0.219 293)" },
+  { radius: 15, seconds: 28, size: 11, tint: "oklch(0.79 0.134 211)" },
+  { radius: 20, seconds: 40, size: 15, tint: "oklch(0.7 0.194 4)" },
+  { radius: 25, seconds: 55, size: 12, tint: "oklch(0.61 0.219 293)" },
   { radius: 30, seconds: 72, size: 17, tint: "oklch(0.79 0.134 211)" },
-  { radius: 35, seconds: 92, size: 12, tint: "oklch(0.7 0.194 4)" },
+  { radius: 35, seconds: 92, size: 13, tint: "oklch(0.7 0.194 4)" },
   { radius: 40, seconds: 112, size: 16, tint: "oklch(0.61 0.219 293)" },
 ];
 
@@ -42,8 +52,8 @@ export function EventUniverse() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
-      el.style.setProperty("--sys-ry", `${((e.clientX - r.left) / r.width - 0.5) * 10}deg`);
-      el.style.setProperty("--sys-rx", `${-((e.clientY - r.top) / r.height - 0.5) * 8}deg`);
+      el.style.setProperty("--sys-ry", `${((e.clientX - r.left) / r.width - 0.5) * 14}deg`);
+      el.style.setProperty("--sys-rx", `${-((e.clientY - r.top) / r.height - 0.5) * 11}deg`);
     };
     const reset = () => {
       el.style.setProperty("--sys-ry", "0deg");
@@ -67,14 +77,14 @@ export function EventUniverse() {
         style={{
           transform:
             "perspective(1200px) rotateX(var(--sys-rx, 0deg)) rotateY(var(--sys-ry, 0deg))",
-          transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
+          transition: "transform 0.15s ease-out",
         }}
       >
         {/* orbit rings — square boxes sized off the container height */}
         {PLANETS.map((p, i) => (
           <div
             key={`orbit-${planets[i]?.slug ?? i}`}
-            className="pointer-events-none absolute left-1/2 top-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed transition-colors duration-300"
+            className="pointer-events-none absolute left-1/2 top-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border transition-colors duration-200"
             style={{
               height: `${p.radius * 2}%`,
               borderColor:
@@ -107,14 +117,14 @@ export function EventUniverse() {
                     onMouseLeave={() => setActive((v) => (v === i ? null : v))}
                     onFocus={() => setActive(i)}
                     onBlur={() => setActive(null)}
-                    className={`pointer-events-auto absolute flex -translate-x-1/2 -translate-y-1/2 items-center ${
-                      // alternate the label side so neighbouring orbits never
-                      // stack their labels on top of each other
-                      i % 2 === 0 ? "flex-col" : "flex-col-reverse"
+                    className={`pointer-events-auto absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 ${
+                      // labels sit beside the planet and alternate sides, so
+                      // two planets on neighbouring orbits never overlap text
+                      i % 2 === 0 ? "flex-row" : "flex-row-reverse"
                     }`}
                   >
                     <span
-                      className="block rounded-full transition-all duration-300"
+                      className="block rounded-full transition-all duration-200"
                       style={{
                         width: on ? p.size * 1.7 : p.size,
                         height: on ? p.size * 1.7 : p.size,
@@ -123,8 +133,10 @@ export function EventUniverse() {
                       }}
                     />
                     <span
-                      className={`display-face my-2.5 whitespace-nowrap rounded px-1.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 md:text-sm ${
-                        on ? "bg-background/70 text-foreground" : "text-muted-foreground/70"
+                      className={`display-face whitespace-nowrap rounded px-1.5 py-0.5 text-[10px] uppercase tracking-[0.16em] transition-all duration-200 md:text-xs ${
+                        on
+                          ? "bg-background/80 text-foreground"
+                          : "bg-background/30 text-muted-foreground/80"
                       }`}
                     >
                       {e.name}
@@ -138,7 +150,7 @@ export function EventUniverse() {
 
         {/* the sun */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <span className="sun-core block h-16 w-16 rounded-full md:h-24 md:w-24" />
+          <span className="sun-core block h-12 w-12 rounded-full md:h-16 md:w-16" />
         </div>
       </div>
 

@@ -214,6 +214,12 @@
     letter-spacing: -0.02em;
   }
 
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+
   ::selection {
     background: var(--primary);
     color: var(--primary-foreground);
@@ -329,6 +335,25 @@
   }
 }
 
+@keyframes route-wipe {
+  0% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
 @keyframes marquee-slide {
   from {
     transform: translateX(0);
@@ -440,18 +465,18 @@
 @utility tilt-3d {
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
   transform-style: preserve-3d;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.12s ease-out;
   will-change: transform;
 }
 
 @utility tilt-sheen {
   background: radial-gradient(
     22rem 22rem at var(--px, 50%) var(--py, 50%),
-    oklch(0.85 0.09 290 / 16%),
+    oklch(0.85 0.09 290 / 18%),
     transparent 60%
   );
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.18s ease;
 }
 
 @utility glass-pane {
@@ -528,11 +553,30 @@
   animation: sun-pulse 5.5s ease-in-out infinite;
 }
 
-/* glitch button: two clipped RGB-split copies of the label slice on hover.
-   Needs data-text="<label>" on the element to mirror the text. */
-@utility btn-glitch {
-  position: relative;
-  isolation: isolate;
+@utility route-wipe {
+  background: linear-gradient(
+    180deg,
+    oklch(0.7 0.194 4 / 92%),
+    oklch(0.61 0.219 293 / 92%) 55%,
+    oklch(0.1 0.032 300)
+  );
+  animation: route-wipe 0.85s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@utility cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  pointer-events: none;
+  border-radius: 999px;
+  border: 1px solid oklch(0.79 0.134 211 / 70%);
+  mix-blend-mode: difference;
+  transition:
+    width 0.22s ease,
+    height 0.22s ease,
+    background-color 0.22s ease,
+    opacity 0.22s ease;
 }
 
 @utility marquee-track {
@@ -559,50 +603,6 @@
 }
 
 @layer components {
-  .btn-glitch::before,
-  .btn-glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.18s ease;
-  }
-
-  .btn-glitch::before {
-    color: oklch(0.79 0.134 211);
-    text-shadow: -2px 0 oklch(0.79 0.134 211 / 80%);
-  }
-
-  .btn-glitch::after {
-    color: oklch(0.7 0.194 4);
-    text-shadow: 2px 0 oklch(0.7 0.194 4 / 80%);
-  }
-
-  .btn-glitch:hover::before,
-  .btn-glitch:focus-visible::before {
-    opacity: 0.9;
-    animation: glitch-slice-a 0.55s steps(2, end) infinite;
-  }
-
-  .btn-glitch:hover::after,
-  .btn-glitch:focus-visible::after {
-    opacity: 0.9;
-    animation: glitch-slice-b 0.65s steps(2, end) infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .btn-glitch:hover::before,
-    .btn-glitch:hover::after,
-    .btn-glitch:focus-visible::before,
-    .btn-glitch:focus-visible::after {
-      animation: none;
-      opacity: 0;
-    }
-  }
-
   .pill-solid:hover {
     box-shadow: 0 0 46px oklch(0.61 0.219 293 / 65%);
     transform: translateY(-2px);
