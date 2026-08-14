@@ -15,13 +15,19 @@ import { events } from "@/lib/events";
  * Hovering a planet pauses its orbit and lights up its ring.
  */
 
+/**
+ * Radii are % of container height from the centre, so the outermost orbit must
+ * stay under 50% minus room for the planet disc and the label beneath it —
+ * otherwise the outer planet (Pitch) is clipped at the top and bottom of its
+ * orbit. 40% leaves that headroom.
+ */
 const PLANETS = [
-  { radius: 14, seconds: 26, tint: "oklch(0.79 0.134 211)" },
-  { radius: 22, seconds: 38, tint: "oklch(0.7 0.194 4)" },
-  { radius: 30, seconds: 52, tint: "oklch(0.61 0.219 293)" },
-  { radius: 38, seconds: 68, tint: "oklch(0.79 0.134 211)" },
-  { radius: 45, seconds: 86, tint: "oklch(0.7 0.194 4)" },
-  { radius: 52, seconds: 106, tint: "oklch(0.61 0.219 293)" },
+  { radius: 11, seconds: 26, tint: "oklch(0.79 0.134 211)" },
+  { radius: 17, seconds: 38, tint: "oklch(0.7 0.194 4)" },
+  { radius: 23, seconds: 52, tint: "oklch(0.61 0.219 293)" },
+  { radius: 29, seconds: 68, tint: "oklch(0.79 0.134 211)" },
+  { radius: 33, seconds: 86, tint: "oklch(0.7 0.194 4)" },
+  { radius: 38, seconds: 106, tint: "oklch(0.61 0.219 293)" },
 ];
 
 export function EventUniverse() {

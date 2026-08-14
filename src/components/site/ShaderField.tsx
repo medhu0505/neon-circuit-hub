@@ -247,22 +247,39 @@ export function ShaderField({
     const canvas = ref.current;
     if (!canvas) return;
 
-    const opts = { alpha: false, antialias: false };
+    // preserveDrawingBuffer: without it the buffer is cleared after each composite,
+    // and an empty buffer under mix-blend-mode:screen paints the band white
+    const opts = { alpha: false, antialias: false, preserveDrawingBuffer: true };
+    /** No shader is fine; a blank blended canvas is not — hide it. */
+    const disable = () => {
+      canvas.style.display = "none";
+    };
+
     const gl = (canvas.getContext("webgl2", opts) ??
       canvas.getContext("webgl", opts)) as WebGLRenderingContext | null;
-    if (!gl) return;
+    if (!gl) {
+      disable();
+      return;
+    }
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERT);
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return;
+    if (!vs || !fs) {
+      disable();
+      return;
+    }
 
     const program = gl.createProgram();
-    if (!program) return;
+    if (!program) {
+      disable();
+      return;
+    }
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.warn("[ShaderField]", gl.getProgramInfoLog(program));
+      disable();
       return;
     }
     gl.useProgram(program);
@@ -289,6 +306,7 @@ export function ShaderField({
     const target = { x: 0, y: 0 };
     let raf = 0;
     let visible = true;
+    let lastTime = 12;
 
     const resize = () => {
       // capped DPR — the field is soft, so extra pixels buy nothing, and the
@@ -301,6 +319,10 @@ export function ShaderField({
       gl.uniform2f(uRes, canvas.width, canvas.height);
       mouse.x = target.x = canvas.width * 0.5;
       mouse.y = target.y = canvas.height * 0.5;
+      // resizing wipes the buffer — repaint now so it is never left empty
+      gl.uniform2f(uMouse, mouse.x, mouse.y);
+      gl.uniform1f(uTime, lastTime);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
     const onMove = (e: PointerEvent) => {
@@ -315,8 +337,9 @@ export function ShaderField({
       if (!visible) return;
       mouse.x += (target.x - mouse.x) * 0.045;
       mouse.y += (target.y - mouse.y) * 0.045;
+      lastTime = t * 0.001;
       gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.uniform1f(uTime, t * 0.001);
+      gl.uniform1f(uTime, lastTime);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
@@ -324,14 +347,25 @@ export function ShaderField({
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      // one static frame — still atmospheric, no animation
+      // one static frame — still atmospheric, no animation. preserveDrawingBuffer
+      // keeps it on screen instead of blanking on the next composite.
+      lastTime = 12;
       gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.uniform1f(uTime, 12.0);
+      gl.uniform1f(uTime, lastTime);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     } else {
       raf = requestAnimationFrame(frame);
       window.addEventListener("pointermove", onMove, { passive: true });
     }
+
+    // a lost context leaves an empty buffer behind, which is exactly the state
+    // that washes the band white under screen blending
+    const onLost = (e: Event) => {
+      e.preventDefault();
+      cancelAnimationFrame(raf);
+      disable();
+    };
+    canvas.addEventListener("webglcontextlost", onLost);
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
@@ -348,6 +382,7 @@ export function ShaderField({
 
     return () => {
       cancelAnimationFrame(raf);
+      canvas.removeEventListener("webglcontextlost", onLost);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);
       ro.disconnect();
