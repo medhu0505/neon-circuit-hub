@@ -1,0 +1,18 @@
+# Netlify deploy config.
+#
+# This app is server-rendered by TanStack Start on Nitro, not a static SPA, so
+# there is no dist/client — that path was the cause of the failing deploy.
+#
+# With NITRO_PRESET=netlify, Nitro emits:
+#   dist/                          static client assets  -> publish
+#   .netlify/functions-internal/   the SSR handler       -> picked up automatically
+#
+# Settings here override the Netlify UI, so the build is reproducible from the repo.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"
+  NODE_VERSION = "20"
