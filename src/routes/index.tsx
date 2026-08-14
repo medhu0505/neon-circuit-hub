@@ -8,6 +8,7 @@ import { Orrery } from "@/components/site/Orrery";
 import { ClientOnly } from "@/components/site/ClientOnly";
 import { TeamGrid } from "@/components/site/TeamGrid";
 import { Tilt } from "@/components/site/Tilt";
+import { Faq } from "@/components/site/Faq";
 import { Parallax } from "@/components/site/Parallax";
 
 export const Route = createFileRoute("/")({
@@ -187,6 +188,21 @@ function Index() {
         </Reveal>
         <div className="mt-16">
           <TeamGrid />
+        </div>
+      </section>
+
+      <section id="faq" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24">
+        <Reveal>
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+            faq
+          </p>
+          <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] md:text-6xl">
+            <span className="block text-foreground">Frequently asked</span>
+            <span className="wordmark block">questions.</span>
+          </h2>
+        </Reveal>
+        <div className="mt-12">
+          <Faq />
         </div>
       </section>
 

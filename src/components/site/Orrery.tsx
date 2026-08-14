@@ -1,9 +1,9 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, MeshTransmissionMaterial, Stars } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useNavigate } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import type { Group, Mesh } from "three";
+import { useEffect, useRef, useState } from "react";
+import type { Group, Mesh, PerspectiveCamera } from "three";
 import { events } from "@/lib/events";
 
 /**
@@ -27,6 +27,31 @@ const PLANETS = [
   { radius: 6.2, speed: 0.13, size: 0.24, tint: "#f9418a" },
   { radius: 7.1, speed: 0.1, size: 0.3, tint: "#8b46f0" },
 ];
+
+/**
+ * Pulls the camera back far enough that the widest orbit fits the canvas on
+ * BOTH axes. A fixed camera position can only ever suit one aspect ratio — at
+ * 16/9 the outer planets ran off the sides, and on a square phone canvas they
+ * ran off the top and bottom.
+ */
+function FitCamera({ maxRadius }: { maxRadius: number }) {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    const cam = camera as PerspectiveCamera;
+    const aspect = Math.max(0.2, size.width / Math.max(1, size.height));
+    const vFov = (cam.fov * Math.PI) / 180;
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
+    // distance at which maxRadius just fits, whichever axis is tighter
+    const dist = Math.max(maxRadius / Math.tan(vFov / 2), maxRadius / Math.tan(hFov / 2)) * 1.12;
+    const elevation = 0.55; // radians above the orbital plane
+    cam.position.set(0, Math.sin(elevation) * dist, Math.cos(elevation) * dist);
+    cam.lookAt(0, 0, 0);
+    cam.updateProjectionMatrix();
+  }, [camera, size, maxRadius]);
+
+  return null;
+}
 
 function OrbitRing({ radius }: { radius: number }) {
   return (
@@ -141,6 +166,9 @@ function Scene({
 }) {
   return (
     <>
+      {/* widest orbit + planet + room for its label */}
+      <FitCamera maxRadius={8.1} />
+
       <ambientLight intensity={0.35} />
       <pointLight position={[0, 0, 0]} intensity={55} color="#ffd0e6" distance={26} decay={2} />
       <directionalLight position={[6, 8, 4]} intensity={0.6} color="#8fe6ff" />
@@ -170,6 +198,7 @@ export function Orrery() {
       <div className="relative aspect-square w-full sm:aspect-[4/3] lg:aspect-[16/9]">
         <Canvas
           camera={{ position: [0, 6.5, 11], fov: 42 }}
+          // FitCamera overrides position on mount and on every resize
           dpr={[1, 1.6]}
           gl={{ antialias: true }}
         >
