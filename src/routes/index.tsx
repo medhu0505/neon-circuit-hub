@@ -4,7 +4,8 @@ import { ShaderField } from "@/components/site/ShaderField";
 import { Reveal } from "@/components/site/Reveal";
 import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 import { RegisterNowButton } from "@/components/site/RegisterChoice";
-import { EventUniverse } from "@/components/site/EventUniverse";
+import { Orrery } from "@/components/site/Orrery";
+import { ClientOnly } from "@/components/site/ClientOnly";
 import { TeamGrid } from "@/components/site/TeamGrid";
 import { Tilt } from "@/components/site/Tilt";
 import { Parallax } from "@/components/site/Parallax";
@@ -130,7 +131,13 @@ function Index() {
         </Reveal>
         <Reveal delay={90}>
           <div className="mt-12">
-            <EventUniverse />
+            <ClientOnly
+              fallback={
+                <div className="glass-pane aspect-square w-full rounded-3xl sm:aspect-[4/3] lg:aspect-[16/9]" />
+              }
+            >
+              <Orrery />
+            </ClientOnly>
           </div>
         </Reveal>
       </section>
