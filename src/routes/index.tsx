@@ -6,6 +6,8 @@ import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 import { RegisterNowButton } from "@/components/site/RegisterChoice";
 import { EventUniverse } from "@/components/site/EventUniverse";
 import { TeamGrid } from "@/components/site/TeamGrid";
+import { Tilt } from "@/components/site/Tilt";
+import { Parallax } from "@/components/site/Parallax";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,7 +62,7 @@ function Index() {
         <div className="pointer-events-none absolute left-5 top-10 h-16 w-16 border-l border-t border-dashed border-secondary/30" />
         <div className="pointer-events-none absolute bottom-10 right-5 h-16 w-16 border-b border-r border-dashed border-primary/30" />
         <div className="pointer-events-none absolute right-16 top-16 h-1.5 w-1.5 rounded-full bg-secondary/60" />
-        <div className="relative mx-auto max-w-6xl px-5 py-28 md:py-40">
+        <div className="relative mx-auto max-w-6xl px-5 pb-28 pt-36 md:pb-40 md:pt-44">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
               Air Force Bal Bharati School <span className="text-secondary">·</span> inter-school
@@ -68,10 +70,12 @@ function Index() {
             </p>
           </Reveal>
           <Reveal delay={90}>
-            <h1 className="mt-7 leading-[0.82]">
-              <span className="wordmark block text-6xl md:text-[8.5rem]">QUANTUM</span>
-              <span className="outline-text block text-5xl md:text-[7rem]">V2.0</span>
-            </h1>
+            <Parallax speed={-0.18}>
+              <h1 className="mt-7 leading-[0.82]">
+                <span className="wordmark block text-6xl md:text-[8.5rem]">QUANTUM</span>
+                <span className="outline-text block text-5xl md:text-[7rem]">V2.0</span>
+              </h1>
+            </Parallax>
           </Reveal>
           <Reveal delay={180}>
             <p className="mt-9 max-w-xl text-base leading-relaxed text-muted-foreground">
@@ -84,7 +88,8 @@ function Index() {
               <RegisterNowButton className="pill-solid px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em]" />
               <Link
                 to="/events"
-                className="pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
+                data-text="explore events"
+                className="btn-glitch pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
               >
                 explore events
               </Link>
@@ -150,10 +155,12 @@ function Index() {
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {highlights.map((h, i) => (
             <Reveal key={h.title} delay={i * 90}>
-              <article className="glow-card h-full rounded-md p-7">
-                <h3 className="text-xl font-bold tracking-tight text-primary">{h.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
-              </article>
+              <Tilt className="h-full">
+                <article className="glow-card h-full rounded-xl p-7">
+                  <h3 className="text-xl font-bold tracking-tight text-primary">{h.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
+                </article>
+              </Tilt>
             </Reveal>
           ))}
         </div>

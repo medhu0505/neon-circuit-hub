@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { events } from "@/lib/events";
 
 /**
@@ -22,23 +22,54 @@ import { events } from "@/lib/events";
  * orbit. 40% leaves that headroom.
  */
 const PLANETS = [
-  { radius: 11, seconds: 26, tint: "oklch(0.79 0.134 211)" },
-  { radius: 17, seconds: 38, tint: "oklch(0.7 0.194 4)" },
-  { radius: 23, seconds: 52, tint: "oklch(0.61 0.219 293)" },
-  { radius: 29, seconds: 68, tint: "oklch(0.79 0.134 211)" },
-  { radius: 33, seconds: 86, tint: "oklch(0.7 0.194 4)" },
-  { radius: 38, seconds: 106, tint: "oklch(0.61 0.219 293)" },
+  { radius: 12, seconds: 28, size: 10, tint: "oklch(0.79 0.134 211)" },
+  { radius: 18, seconds: 40, size: 15, tint: "oklch(0.7 0.194 4)" },
+  { radius: 24, seconds: 55, size: 11, tint: "oklch(0.61 0.219 293)" },
+  { radius: 30, seconds: 72, size: 17, tint: "oklch(0.79 0.134 211)" },
+  { radius: 35, seconds: 92, size: 12, tint: "oklch(0.7 0.194 4)" },
+  { radius: 40, seconds: 112, size: 16, tint: "oklch(0.61 0.219 293)" },
 ];
 
 export function EventUniverse() {
   const [active, setActive] = useState<number | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const planets = events.slice(0, PLANETS.length);
+
+  // the whole system tilts a few degrees toward the cursor for depth
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--sys-ry", `${((e.clientX - r.left) / r.width - 0.5) * 10}deg`);
+      el.style.setProperty("--sys-rx", `${-((e.clientY - r.top) / r.height - 0.5) * 8}deg`);
+    };
+    const reset = () => {
+      el.style.setProperty("--sys-ry", "0deg");
+      el.style.setProperty("--sys-rx", "0deg");
+    };
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", reset);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", reset);
+    };
+  }, []);
 
   return (
     <div className="glass-pane relative overflow-hidden rounded-3xl">
       <div className="grid-drift pointer-events-none absolute inset-0 opacity-40" />
 
-      <div className="relative aspect-square w-full sm:aspect-[4/3] lg:aspect-[16/9]">
+      <div
+        ref={stageRef}
+        className="relative aspect-square w-full sm:aspect-[4/3] lg:aspect-[16/9]"
+        style={{
+          transform:
+            "perspective(1200px) rotateX(var(--sys-rx, 0deg)) rotateY(var(--sys-ry, 0deg))",
+          transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
         {/* orbit rings — square boxes sized off the container height */}
         {PLANETS.map((p, i) => (
           <div
@@ -76,20 +107,24 @@ export function EventUniverse() {
                     onMouseLeave={() => setActive((v) => (v === i ? null : v))}
                     onFocus={() => setActive(i)}
                     onBlur={() => setActive(null)}
-                    className="pointer-events-auto absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+                    className={`pointer-events-auto absolute flex -translate-x-1/2 -translate-y-1/2 items-center ${
+                      // alternate the label side so neighbouring orbits never
+                      // stack their labels on top of each other
+                      i % 2 === 0 ? "flex-col" : "flex-col-reverse"
+                    }`}
                   >
                     <span
                       className="block rounded-full transition-all duration-300"
                       style={{
-                        width: on ? 22 : 14,
-                        height: on ? 22 : 14,
-                        background: p.tint,
-                        boxShadow: `0 0 ${on ? 32 : 15}px ${p.tint}`,
+                        width: on ? p.size * 1.7 : p.size,
+                        height: on ? p.size * 1.7 : p.size,
+                        background: `radial-gradient(circle at 34% 30%, oklch(0.98 0.02 300), ${p.tint} 58%, oklch(0.35 0.1 300))`,
+                        boxShadow: `0 0 ${on ? 34 : 16}px ${p.tint}`,
                       }}
                     />
                     <span
-                      className={`display-face mt-2.5 whitespace-nowrap text-[11px] uppercase tracking-[0.18em] transition-colors md:text-sm ${
-                        on ? "text-foreground" : "text-muted-foreground/70"
+                      className={`display-face my-2.5 whitespace-nowrap rounded px-1.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 md:text-sm ${
+                        on ? "bg-background/70 text-foreground" : "text-muted-foreground/70"
                       }`}
                     >
                       {e.name}
@@ -102,17 +137,15 @@ export function EventUniverse() {
         })}
 
         {/* the sun */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-          <span className="sun-core block h-14 w-14 rounded-full md:h-20 md:w-20" />
-          <span className="mt-4 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:text-xs">
-            Quantum V2.0
-          </span>
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <span className="sun-core block h-16 w-16 rounded-full md:h-24 md:w-24" />
         </div>
       </div>
 
       <div className="relative flex min-h-16 flex-wrap items-center justify-between gap-3 border-t border-border/50 px-6 py-4">
         <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-          {active === null ? "select a planet" : planets[active]!.tagline}
+          <span className="text-secondary">Quantum V2.0</span>
+          {active === null ? " · select a planet" : ` · ${planets[active]!.tagline}`}
         </p>
         <Link
           to="/events"

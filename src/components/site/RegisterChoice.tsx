@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { Tilt } from "./Tilt";
 import { School, User, X } from "lucide-react";
 
 const options = [
@@ -22,21 +23,22 @@ export function RegisterOptions({ onPick }: { onPick?: () => void }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {options.map((o) => (
-        <Link
-          key={o.to}
-          to={o.to}
-          onClick={onPick}
-          className="glow-card group block rounded-md p-6 text-left"
-        >
-          <o.icon className="h-5 w-5 text-secondary" />
-          <h3 className="mt-4 font-mono text-sm uppercase tracking-[0.2em] text-primary">
-            {o.label}
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{o.body}</p>
-          <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-secondary">
-            continue →
-          </p>
-        </Link>
+        <Tilt key={o.to} max={6}>
+          <Link
+            to={o.to}
+            onClick={onPick}
+            className="glow-card group block h-full rounded-xl p-6 text-left"
+          >
+            <o.icon className="h-5 w-5 text-secondary" />
+            <h3 className="mt-4 font-mono text-sm uppercase tracking-[0.2em] text-primary">
+              {o.label}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{o.body}</p>
+            <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-secondary">
+              continue →
+            </p>
+          </Link>
+        </Tilt>
       ))}
     </div>
   );
@@ -93,7 +95,12 @@ export function RegisterNowButton({
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className={className}>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={`btn-glitch ${className ?? ""}`}
+        data-text={typeof children === "string" ? children : undefined}
+      >
         {children}
       </button>
       <RegisterChoiceModal open={open} onClose={() => setOpen(false)} />
