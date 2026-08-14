@@ -4,6 +4,7 @@ import { ShaderField } from "@/components/site/ShaderField";
 import { Reveal } from "@/components/site/Reveal";
 import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 import { RegisterNowButton } from "@/components/site/RegisterChoice";
+import { EventUniverse } from "@/components/site/EventUniverse";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,31 +61,37 @@ function Index() {
         <div className="pointer-events-none absolute right-16 top-16 h-1.5 w-1.5 rounded-full bg-secondary/60" />
         <div className="relative mx-auto max-w-6xl px-5 py-28 md:py-40">
           <Reveal>
-            <p className="font-mono text-xs uppercase tracking-[0.35em] text-secondary">
-              // inter-school tech & culture fest
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+              Air Force Bal Bharati School <span className="text-secondary">·</span> inter-school
+              event
             </p>
           </Reveal>
           <Reveal delay={90}>
-            <h1 className="rgb-split mt-6 text-6xl leading-[0.9] md:text-9xl">
-              <span className="wordmark">QUANTUM</span>
-              <span className="ml-3 font-mono text-2xl text-secondary md:text-4xl">v2.0</span>
+            <h1 className="mt-7 leading-[0.82]">
+              <span className="wordmark block text-6xl md:text-[8.5rem]">QUANTUM</span>
+              <span className="outline-text block text-5xl md:text-[7rem]">V2.0</span>
             </h1>
           </Reveal>
           <Reveal delay={180}>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
+            <p className="mt-9 max-w-xl text-base leading-relaxed text-muted-foreground">
               Two days. Six events. One stage. Quiz, film, advertising, gaming, pitching — and one
               challenge nobody sees coming.
             </p>
           </Reveal>
           <Reveal delay={260}>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <RegisterNowButton className="glitch border border-primary bg-primary/10 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]" />
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <RegisterNowButton className="pill-solid px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em]" />
               <Link
                 to="/events"
-                className="glitch border border-secondary/60 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-secondary transition-shadow hover:shadow-[var(--glow-secondary)]"
+                className="pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
               >
-                view events
+                explore events
               </Link>
+            </div>
+          </Reveal>
+          <Reveal delay={340}>
+            <div className="mt-16 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.35em] text-muted-foreground/70">
+              <span className="scroll-cue inline-block">↓</span> scroll
             </div>
           </Reveal>
         </div>
@@ -106,12 +113,33 @@ function Index() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 py-24">
+        <Reveal>
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+            the event universe
+          </p>
+          <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] md:text-6xl">
+            <span className="block text-foreground">Six formats.</span>
+            <span className="wordmark block">One arena.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={90}>
+          <div className="mt-12">
+            <EventUniverse />
+          </div>
+        </Reveal>
+      </section>
+
       <section id="about" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24">
         <Reveal>
-          <h2 className="text-3xl font-bold md:text-4xl">
-            <span className="text-secondary">//</span> about quantum
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+            what is quantum?
+          </p>
+          <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] md:text-6xl">
+            <span className="block text-foreground">Where ideas</span>
+            <span className="wordmark block">collide.</span>
           </h2>
-          <p className="mt-4 max-w-2xl text-muted-foreground">
+          <p className="mt-8 max-w-2xl text-muted-foreground">
             Quantum is a student-run inter-school fest, running as Quantum v2.0. Teams from across
             the city go head-to-head across six creative and competitive events, all run and judged
             on the day.
@@ -133,14 +161,18 @@ function Index() {
       <section className="noise border-t border-border/60">
         <div className="mx-auto max-w-6xl px-5 py-24 text-center">
           <Reveal>
-            <h2 className="text-3xl font-bold md:text-5xl">
-              Ready to <span className="text-secondary">compete</span>?
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+              experience the quantum
+            </p>
+            <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] md:text-6xl">
+              <span className="text-foreground">Explore. </span>
+              <span className="wordmark">Compete. Create.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
               Registration is free and open to every participating school. Bring a crew and a
               stubborn streak.
             </p>
-            <RegisterNowButton className="glitch mt-9 inline-block border border-primary bg-primary/10 px-9 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary transition-shadow hover:shadow-[var(--glow-primary)]" />
+            <RegisterNowButton className="pill-solid mt-10 inline-block px-10 py-4 font-mono text-xs uppercase tracking-[0.25em]" />
           </Reveal>
         </div>
       </section>

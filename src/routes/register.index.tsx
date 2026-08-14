@@ -48,6 +48,14 @@ const faqs = [
   ["Is there an entry fee?", "No. Participation is free; lunch and refreshments are provided."],
 ] as const;
 
+const steps = [
+  ["select event", "Browse the six events and pick the category you want to enter."],
+  ["check eligibility", "Review the team size and eligibility notes on the event page."],
+  ["register", "Submit your entry as an individual or under your school."],
+  ["get confirmation", "Confirmation and joining instructions are sent to your school."],
+  ["participate", "Turn up on the day, compete and create at Quantum V2.0."],
+] as const;
+
 function RegisterIndex() {
   return (
     <>
@@ -70,6 +78,29 @@ function RegisterIndex() {
       <div className="mx-auto max-w-6xl px-5 py-20">
         <Reveal>
           <RegisterOptions />
+        </Reveal>
+
+        <Reveal delay={80}>
+          <div className="mt-20">
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+              how to register
+            </p>
+            <h2 className="mt-5 text-3xl font-bold uppercase leading-[0.95] md:text-5xl">
+              <span className="block text-foreground">Ready to enter</span>
+              <span className="wordmark block">the quantum?</span>
+            </h2>
+            <ol className="mt-10 grid divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/70 md:grid-cols-5 md:divide-x md:divide-y-0">
+              {steps.map(([title, body], i) => (
+                <li key={title} className="p-6">
+                  <span className="wordmark display-face text-3xl">0{i + 1}</span>
+                  <h3 className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-foreground">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </Reveal>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-2">

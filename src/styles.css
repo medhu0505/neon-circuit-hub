@@ -7,6 +7,8 @@
 @theme {
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-sans: "Inter", system-ui, sans-serif;
+  /* chamfered tech display face — carries the whole poster look */
+  --font-display: "Chakra Petch", "Inter", system-ui, sans-serif;
 }
 
 /*
@@ -183,7 +185,6 @@
   }
 }
 
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -202,7 +203,7 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-mono);
+    font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
 
@@ -213,20 +214,57 @@
 }
 
 @keyframes glitch-shift {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-1px, 1px); }
-  50% { transform: translate(1px, -1px); }
-  75% { transform: translate(-1px, 0); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    transform: translate(1px, -1px);
+  }
+  75% {
+    transform: translate(-1px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes grid-drift {
-  from { background-position: 0 0; }
-  to { background-position: 44px 44px; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 44px 44px;
+  }
 }
 
 @keyframes caret-blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
 }
 
 @utility neon-text {
@@ -238,9 +276,41 @@
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  font-family: var(--font-sans);
-  font-weight: 900;
-  letter-spacing: -0.045em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+/* stroked display text — the big hollow "V2.0" under the wordmark */
+@utility outline-text {
+  color: transparent;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  -webkit-text-stroke: 1.5px oklch(0.61 0.219 293 / 45%);
+}
+
+@utility display-face {
+  font-family: var(--font-display);
+}
+
+/* pill controls */
+@utility pill {
+  border-radius: 999px;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+@utility pill-solid {
+  border-radius: 999px;
+  background: linear-gradient(100deg, oklch(0.61 0.219 293), oklch(0.7 0.194 4));
+  color: oklch(0.98 0.01 300);
+  box-shadow: 0 0 34px oklch(0.61 0.219 293 / 45%);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 @utility rgb-split {
@@ -256,12 +326,11 @@
 }
 
 @utility dashed-motif {
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      oklch(0.79 0.134 211 / 22%) 0 6px,
-      transparent 6px 14px
-    );
+  background-image: repeating-linear-gradient(
+    90deg,
+    oklch(0.79 0.134 211 / 22%) 0 6px,
+    transparent 6px 14px
+  );
   height: 1px;
 }
 
@@ -290,6 +359,16 @@
   animation: caret-blink 1s step-end infinite;
 }
 
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide 38s linear infinite;
+}
+
+@utility scroll-cue {
+  animation: scroll-cue 2.2s ease-in-out infinite;
+}
+
 @utility reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -304,6 +383,11 @@
 }
 
 @layer components {
+  .pill-solid:hover {
+    box-shadow: 0 0 46px oklch(0.61 0.219 293 / 65%);
+    transform: translateY(-2px);
+  }
+
   .glow-card:hover {
     border-color: oklch(0.7 0.194 4 / 55%);
     box-shadow: var(--glow-primary);
