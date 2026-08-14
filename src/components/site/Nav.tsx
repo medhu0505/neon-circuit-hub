@@ -55,6 +55,9 @@ export function Nav() {
         >
           <span className="font-bold text-white">QUANTUM</span>
           <span className="text-white/70">V2.0</span>
+          <span className="ml-1 font-mono text-[9px] normal-case tracking-[0.18em] text-white/50">
+            click me
+          </span>
           <span
             className={`ml-1 inline-block text-xs text-white/70 transition-transform duration-300 ${
               open ? "rotate-180" : ""

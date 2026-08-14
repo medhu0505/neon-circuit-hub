@@ -49,13 +49,17 @@ function Planet({
   const p = PLANETS[index]!;
   const e = events[index]!;
   const ref = useRef<Group>(null);
+  // last angle travelled, so hovering holds the planet where it is rather than
+  // snapping it back to its t=0 start position
+  const angle = useRef((index * Math.PI * 2) / PLANETS.length);
   const navigate = useNavigate();
 
   useFrame((state) => {
     if (!ref.current) return;
-    // hovering freezes this planet; the others keep going
-    const t = active ? 0 : state.clock.elapsedTime;
-    const a = t * p.speed + (index * Math.PI * 2) / PLANETS.length;
+    if (!active) {
+      angle.current = state.clock.elapsedTime * p.speed + (index * Math.PI * 2) / PLANETS.length;
+    }
+    const a = angle.current;
     ref.current.position.set(Math.cos(a) * p.radius, 0, Math.sin(a) * p.radius);
   });
 
@@ -85,7 +89,7 @@ function Planet({
           temporalDistortion={0.1}
           ior={1.5}
           emissive={p.tint}
-          emissiveIntensity={active ? 1.4 : 0.55}
+          emissiveIntensity={active ? 0.9 : 0.3}
         />
       </mesh>
 
@@ -119,9 +123,9 @@ function Sun() {
     <mesh ref={ref}>
       <sphereGeometry args={[1.15, 64, 64]} />
       <meshStandardMaterial
-        color="#ffb27a"
-        emissive="#ff5fa2"
-        emissiveIntensity={2.4}
+        color="#ffc79a"
+        emissive="#ff8ec2"
+        emissiveIntensity={1.15}
         toneMapped={false}
       />
     </mesh>
@@ -138,7 +142,7 @@ function Scene({
   return (
     <>
       <ambientLight intensity={0.35} />
-      <pointLight position={[0, 0, 0]} intensity={140} color="#ff7ab8" distance={40} decay={2} />
+      <pointLight position={[0, 0, 0]} intensity={55} color="#ffd0e6" distance={26} decay={2} />
       <directionalLight position={[6, 8, 4]} intensity={0.6} color="#8fe6ff" />
 
       <Stars radius={60} depth={40} count={1600} factor={3} saturation={0} fade speed={0.6} />
@@ -152,7 +156,7 @@ function Scene({
       ))}
 
       <EffectComposer>
-        <Bloom intensity={1.15} luminanceThreshold={0.35} luminanceSmoothing={0.5} mipmapBlur />
+        <Bloom intensity={0.5} luminanceThreshold={0.72} luminanceSmoothing={0.3} mipmapBlur />
       </EffectComposer>
     </>
   );
