@@ -7,6 +7,7 @@ const links = [
   { to: "/", label: "home" },
   { to: "/", label: "about", hash: "about" },
   { to: "/events", label: "events" },
+  { to: "/", label: "team", hash: "team" },
   { to: "/register", label: "register" },
 ] as const satisfies readonly { to: string; label: string; hash?: string }[];
 

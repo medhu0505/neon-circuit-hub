@@ -52,7 +52,7 @@ function EventsPage() {
               <p className="font-mono text-[11px] uppercase tracking-widest text-secondary">
                 {e.format}
               </p>
-              <h2 className="mt-3 text-2xl font-bold tracking-tight">{e.name}</h2>
+              <h2 className="wordmark mt-3 text-2xl">{e.name}</h2>
               <p className="mt-1 font-mono text-xs text-muted-foreground">{e.tagline}</p>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{e.description}</p>
               <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-primary">

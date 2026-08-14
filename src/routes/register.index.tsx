@@ -106,7 +106,7 @@ function RegisterIndex() {
         <div className="mt-14 grid gap-8 lg:grid-cols-2">
           <Reveal delay={120}>
             <div className="glow-card h-full rounded-md p-7">
-              <h2 className="font-mono text-lg">rules.md</h2>
+              <h2 className="font-mono text-lg text-secondary">rules.md</h2>
               <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
                 {rules.map((r) => (
                   <li key={r} className="flex gap-3">
@@ -120,7 +120,7 @@ function RegisterIndex() {
 
           <Reveal delay={180}>
             <div className="glow-card h-full rounded-md p-7">
-              <h2 className="font-mono text-lg">faq</h2>
+              <h2 className="font-mono text-lg text-secondary">faq</h2>
               <dl className="mt-4 space-y-5">
                 {faqs.map(([q, a]) => (
                   <div key={q}>

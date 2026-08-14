@@ -72,17 +72,17 @@ function IndividualPage() {
               className="glow-card rounded-md p-7"
             >
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="full_name" placeholder="A. Student" />
+                <Field label="name" placeholder="A. Student" />
+                <Field label="class" placeholder="11-B" />
                 <Field label="school" placeholder="Placeholder Public School" />
-                <Field label="class_section" placeholder="11-B" />
+                <Field label="phone_no" type="tel" placeholder="+91 90000 00000" />
                 <Field label="email" type="email" placeholder="student@school.edu" />
-                <Field label="phone" type="tel" placeholder="+91 90000 00000" />
-                <SelectField label="primary_event" options={eventOptions} />
+                <SelectField label="event" options={eventOptions} />
               </div>
               <div className="mt-5">
                 <TextArea
-                  label="notes"
-                  placeholder="Second event preference, gear you're bringing, anything else"
+                  label="other_events"
+                  placeholder="Any additional events you want to enter, one per line"
                   rows={3}
                 />
               </div>
@@ -97,7 +97,7 @@ function IndividualPage() {
 
           <Reveal delay={80}>
             <div className="glow-card rounded-md p-7">
-              <h2 className="font-mono text-lg">solo_notes.md</h2>
+              <h2 className="font-mono text-lg text-secondary">solo_notes.md</h2>
               <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
                 {notes.map((n) => (
                   <li key={n} className="flex gap-3">

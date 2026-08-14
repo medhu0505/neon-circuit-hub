@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { Clapperboard, Sparkles, Trophy, Users } from "lucide-react";
 import { RegisterNowButton } from "@/components/site/RegisterChoice";
 import { EventUniverse } from "@/components/site/EventUniverse";
+import { TeamGrid } from "@/components/site/TeamGrid";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -155,6 +156,24 @@ function Index() {
               </article>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      <section id="team" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24">
+        <Reveal>
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+            meet the team
+          </p>
+          <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] md:text-6xl">
+            <span className="block text-foreground">The people</span>
+            <span className="wordmark block">behind it.</span>
+          </h2>
+          <p className="mt-8 max-w-2xl text-muted-foreground">
+            The students and staff running Quantum V2.0 on the day.
+          </p>
+        </Reveal>
+        <div className="mt-16">
+          <TeamGrid />
         </div>
       </section>
 

@@ -12,8 +12,8 @@ const options = [
   {
     to: "/register/school" as const,
     icon: School,
-    label: "register school",
-    body: "Bringing a contingent? Enter your school once and add every team under it.",
+    label: "register as school / team",
+    body: "Entering as a school team? One entry covers the teacher in charge and every member.",
   },
 ];
 

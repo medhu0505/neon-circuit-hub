@@ -74,20 +74,16 @@ function SchoolPage() {
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="school_name" placeholder="Placeholder Public School" />
-                <Field label="city" placeholder="Placeholder City" />
-                <Field label="coordinator_name" placeholder="Ms. Placeholder" />
-                <Field
-                  label="coordinator_email"
-                  type="email"
-                  placeholder="coordinator@school.edu"
-                />
-                <Field label="coordinator_phone" type="tel" placeholder="+91 90000 00000" />
-                <SelectField label="lead_event" options={eventOptions} />
+                <Field label="teacher_in_charge" placeholder="Ms. Placeholder" />
+                <Field label="class" placeholder="11-B" />
+                <Field label="phone_no" type="tel" placeholder="+91 90000 00000" />
+                <Field label="email" type="email" placeholder="coordinator@school.edu" />
+                <SelectField label="event" options={eventOptions} />
               </div>
               <div className="mt-5">
                 <TextArea
-                  label="teams"
-                  placeholder={"One team per line — event, team name, member count"}
+                  label="team_members"
+                  placeholder={"One participant per line — name, class, event"}
                 />
               </div>
               <button
@@ -101,7 +97,7 @@ function SchoolPage() {
 
           <Reveal delay={80}>
             <div className="glow-card rounded-md p-7">
-              <h2 className="font-mono text-lg">rules.md</h2>
+              <h2 className="font-mono text-lg text-secondary">rules.md</h2>
               <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
                 {rules.map((r) => (
                   <li key={r} className="flex gap-3">

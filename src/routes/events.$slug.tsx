@@ -65,7 +65,7 @@ function EventDetail() {
         <div className="grid gap-5 md:grid-cols-2">
           <Reveal>
             <div className="glow-card h-full rounded-md p-7">
-              <h2 className="font-mono text-lg">rules</h2>
+              <h2 className="font-mono text-lg text-secondary">rules</h2>
               <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
                 {event.rules.map((r) => (
                   <li key={r} className="flex gap-3">
@@ -78,7 +78,7 @@ function EventDetail() {
           </Reveal>
           <Reveal delay={90}>
             <div className="glow-card h-full rounded-md p-7">
-              <h2 className="font-mono text-lg">details</h2>
+              <h2 className="font-mono text-lg text-secondary">details</h2>
               <dl className="mt-4 space-y-5 text-sm">
                 <div>
                   <dt className="font-mono text-xs uppercase tracking-widest text-secondary">
