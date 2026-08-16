@@ -3,55 +3,90 @@ const inputClass =
 
 export function Field({
   label,
+  name,
   placeholder,
   type = "text",
+  required = true,
 }: {
   label: string;
+  name: string;
   placeholder: string;
   type?: string;
+  required?: boolean;
 }) {
   return (
     <div>
-      <label className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+      <label
+        htmlFor={name}
+        className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
+      >
         {label}
       </label>
-      <input type={type} placeholder={placeholder} className={inputClass} />
+      <input
+        id={name}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        required={required}
+        className={inputClass}
+      />
     </div>
   );
 }
 
 export function TextArea({
   label,
+  name,
   placeholder,
   rows = 4,
+  required = false,
 }: {
   label: string;
+  name: string;
   placeholder: string;
   rows?: number;
+  required?: boolean;
 }) {
   return (
     <div>
-      <label className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+      <label
+        htmlFor={name}
+        className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
+      >
         {label}
       </label>
-      <textarea rows={rows} placeholder={placeholder} className={inputClass} />
+      <textarea
+        id={name}
+        name={name}
+        rows={rows}
+        placeholder={placeholder}
+        required={required}
+        className={inputClass}
+      />
     </div>
   );
 }
 
 export function SelectField({
   label,
+  name,
   options,
+  required = true,
 }: {
   label: string;
+  name: string;
   options: readonly { value: string; label: string }[];
+  required?: boolean;
 }) {
   return (
     <div>
-      <label className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+      <label
+        htmlFor={name}
+        className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
+      >
         {label}
       </label>
-      <select className={inputClass} defaultValue="">
+      <select id={name} name={name} required={required} className={inputClass} defaultValue="">
         <option value="" disabled>
           select…
         </option>

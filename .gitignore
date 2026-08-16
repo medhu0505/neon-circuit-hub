@@ -33,3 +33,6 @@ dist-ssr
 
 # Netlify build output
 .netlify
+
+# Local env (created from .env.example; safe values, kept out of git by convention)
+.env

@@ -25,3 +25,8 @@
 [build.environment]
   NITRO_PRESET = "netlify"
   NODE_VERSION = "20"
+  # Supabase project "Quantum" — publishable key, safe to expose in a client
+  # bundle. It can only INSERT into the two registration tables (see
+  # supabase migration "create_registration_tables"); it has no read access.
+  VITE_SUPABASE_URL = "https://lamqnrxspkmzfllnvgks.supabase.co"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_84JWeEfGbBdgNNedJEHBkQ_5lphxfX1"

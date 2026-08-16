@@ -7,11 +7,18 @@ REM   run.bat          start the dev server (hot reload)
 REM   run.bat build    build for production into .output
 REM   run.bat start    build, then serve the production build
 
-where npm >/dev/null 2>nul
+where npm >nul 2>nul
 if errorlevel 1 (
   echo [X] npm was not found. Install Node.js 20+ from https://nodejs.org and reopen this window.
   pause
   exit /b 1
+)
+
+if not exist ".env" (
+  if exist ".env.example" (
+    echo [*] Creating .env from .env.example ^(Supabase project config^)...
+    copy /y ".env.example" ".env" >nul
+  )
 )
 
 if not exist "node_modules" (
