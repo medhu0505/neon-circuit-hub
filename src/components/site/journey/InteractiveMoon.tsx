@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "./useJourney";
-import moonSrc from "/images/moon.png?url";
+
+/** Served straight from /public — no bundler import needed. */
+const moonSrc = "/images/moon.png";
 
 /**
  * A purely 2D moon: one high-resolution image plus stacked ghost copies for the
