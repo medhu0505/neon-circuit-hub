@@ -840,7 +840,6 @@
   }
   .moon-2d.is-glitching .moon-ghost-cyan {
     opacity: 1;
-    filter: url(#none) brightness(1.1);
     animation: moon-rgb-a 0.42s steps(2, end) infinite;
   }
   .moon-2d.is-glitching .moon-ghost-magenta {
