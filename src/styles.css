@@ -651,3 +651,238 @@
       4px 0 oklch(0.79 0.134 211 / 45%);
   }
 }
+
+/* ── Journey: 2D moon, bat signal, plaza ─────────────────────────── */
+
+@keyframes moon-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes moon-tear {
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+  12% {
+    clip-path: inset(14% 0 71% 0);
+    transform: translate3d(-9px, 0, 0);
+  }
+  22% {
+    clip-path: inset(52% 0 38% 0);
+    transform: translate3d(11px, 0, 0);
+  }
+  33% {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+  47% {
+    clip-path: inset(76% 0 12% 0);
+    transform: translate3d(-14px, 0, 0);
+  }
+  58% {
+    clip-path: inset(30% 0 62% 0);
+    transform: translate3d(6px, 0, 0);
+  }
+  70% {
+    clip-path: inset(0 0 0 0);
+  }
+  84% {
+    clip-path: inset(62% 0 24% 0);
+    transform: translate3d(-5px, 0, 0);
+  }
+}
+
+@keyframes moon-rgb-a {
+  0%,
+  100% {
+    transform: translate3d(-6px, 1px, 0);
+    opacity: 0.55;
+  }
+  27% {
+    transform: translate3d(-13px, -3px, 0);
+    opacity: 0.8;
+  }
+  61% {
+    transform: translate3d(-3px, 4px, 0);
+    opacity: 0.4;
+  }
+}
+
+@keyframes moon-rgb-b {
+  0%,
+  100% {
+    transform: translate3d(7px, -2px, 0);
+    opacity: 0.5;
+  }
+  31% {
+    transform: translate3d(14px, 3px, 0);
+    opacity: 0.75;
+  }
+  66% {
+    transform: translate3d(4px, -5px, 0);
+    opacity: 0.35;
+  }
+}
+
+@keyframes moon-flicker {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  8% {
+    filter: brightness(1.5) contrast(1.2);
+  }
+  11% {
+    filter: brightness(0.72);
+  }
+  43% {
+    filter: brightness(1.28);
+  }
+  46% {
+    filter: brightness(0.9);
+  }
+}
+
+@keyframes moon-scan {
+  from {
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 22px;
+  }
+}
+
+@keyframes signal-sweep {
+  from {
+    transform: translateX(-50%) rotate(-7deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(7deg);
+  }
+}
+
+@keyframes signal-flicker {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  38% {
+    opacity: 0.5;
+  }
+  41% {
+    opacity: 0.85;
+  }
+  76% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes plaza-rain {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      -60px 900px,
+      40px 1200px;
+  }
+}
+
+@layer components {
+  .moon-2d {
+    position: relative;
+    cursor: grab;
+    will-change: transform;
+  }
+  .moon-2d:active {
+    cursor: grabbing;
+  }
+  .moon-2d img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .moon-2d .moon-ghost {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  .moon-2d .moon-scanlines {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 9999px;
+    mix-blend-mode: overlay;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      oklch(0.79 0.134 211 / 22%) 0 1px,
+      transparent 1px 4px
+    );
+  }
+  .moon-2d.is-glitching .moon-base {
+    animation:
+      moon-tear 0.62s steps(3, end) infinite,
+      moon-flicker 1.1s steps(4, end) infinite;
+  }
+  .moon-2d.is-glitching .moon-ghost-cyan {
+    opacity: 1;
+    filter: url(#none) brightness(1.1);
+    animation: moon-rgb-a 0.42s steps(2, end) infinite;
+  }
+  .moon-2d.is-glitching .moon-ghost-magenta {
+    opacity: 1;
+    animation: moon-rgb-b 0.5s steps(2, end) infinite;
+  }
+  .moon-2d.is-glitching .moon-scanlines {
+    opacity: 1;
+    animation: moon-scan 0.5s linear infinite;
+  }
+
+  .plaza-rain::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image:
+      repeating-linear-gradient(
+        14deg,
+        oklch(0.79 0.134 211 / 30%) 0 1px,
+        transparent 1px 90px
+      ),
+      repeating-linear-gradient(11deg, oklch(0.7 0.194 4 / 22%) 0 1px, transparent 1px 140px);
+    animation: plaza-rain 1.4s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moon-2d.is-glitching .moon-base,
+  .moon-2d.is-glitching .moon-ghost-cyan,
+  .moon-2d.is-glitching .moon-ghost-magenta,
+  .moon-2d.is-glitching .moon-scanlines,
+  .plaza-rain::before {
+    animation: none !important;
+  }
+  .moon-2d.is-glitching .moon-ghost-cyan {
+    opacity: 0.6;
+    transform: translate3d(-5px, 0, 0);
+  }
+  .moon-2d.is-glitching .moon-ghost-magenta {
+    opacity: 0.6;
+    transform: translate3d(5px, 0, 0);
+  }
+}
