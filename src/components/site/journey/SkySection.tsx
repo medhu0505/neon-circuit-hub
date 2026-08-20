@@ -1,15 +1,15 @@
 import { useRef } from "react";
-import { Link } from "@tanstack/react-router";
-import { RegisterNowButton } from "@/components/site/RegisterChoice";
 import { CodeRain } from "@/components/site/CodeRain";
 import { InteractiveMoon } from "./InteractiveMoon";
 import { BatSignal } from "./BatSignal";
 import { mapRange, useSectionScroll } from "./useJourney";
+import cityAsset from "@/assets/city-full.png.asset.json";
 
 /**
- * Section 0 — the night sky above the city. Nebula plate, 2D moon, bat signal
- * and the fest copy. Scrolling out descends toward the skyline so the city
- * section reads as a continuation rather than a new page.
+ * Section 0 — the night sky above the city. Nebula plate, 2D moon and the
+ * projected Quantum v2.0 signal, which is now the hero's only focal point.
+ * Scrolling out descends toward the skyline so the events section reads as a
+ * continuation rather than a new page.
  */
 export function SkySection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -20,7 +20,6 @@ export function SkySection() {
   const moonScale = mapRange(progress, 0, 1, 1, 0.82);
   const cityRise = mapRange(progress, 0, 1, 0, -140);
   const cityScale = mapRange(progress, 0, 1, 1, 1.25);
-  const copyOpacity = mapRange(progress, 0.05, 0.4, 1, 0);
 
   return (
     <section ref={ref} className="relative h-[190vh]" aria-label="Quantum v2.0 — the night sky">
@@ -38,9 +37,33 @@ export function SkySection() {
         <div className="grid-drift pointer-events-none absolute inset-0 opacity-40" />
         <div className="noise pointer-events-none absolute inset-0" />
 
-        {/* moon, upper-right */}
+        <h1 className="sr-only">Quantum v2.0 — inter-school tech and culture fest</h1>
+
+        <BatSignal dim={mapRange(progress, 0.35, 0.85, 0, 1)} />
+
+        {/* city silhouette rising toward the camera — full composition, contained
+            so the artwork is never cut in half at any aspect ratio */}
         <div
-          className="pointer-events-none absolute right-[4vw] top-[6vh] w-[38vw] max-w-[520px] min-w-[220px]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20"
+          style={{
+            transform: `translate3d(0, ${cityRise}px, 0) scale(${cityScale})`,
+            transformOrigin: "50% 100%",
+          }}
+        >
+          <img
+            src={cityAsset.url}
+            alt=""
+            aria-hidden="true"
+            /* narrow screens zoom into the skyline so it still reads as a city */
+            className="block h-auto w-[190%] max-w-none -translate-x-[24%] select-none object-contain sm:w-full sm:translate-x-0"
+          />
+
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[24vh] bg-gradient-to-t from-background to-transparent" />
+
+        {/* celestial layer — always above the city and every building layer */}
+        <div
+          className="pointer-events-none absolute right-[5vw] top-[6vh] z-40 w-[30vw] min-w-[110px] max-w-[360px] md:w-[26vw] md:min-w-[160px]"
           style={{
             opacity: moonOpacity,
             transform: `translate3d(${-moonShift * 0.35}px, ${moonShift}px, 0) scale(${moonScale})`,
@@ -51,49 +74,9 @@ export function SkySection() {
           </div>
         </div>
 
-        <BatSignal dim={mapRange(progress, 0.1, 0.6, 0, 1)} />
 
-        {/* city silhouette rising toward the camera */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[46vh] bg-bottom bg-no-repeat"
-          style={{
-            backgroundImage: "url(/images/cyber-city.png)",
-            backgroundSize: "cover",
-            transform: `translate3d(0, ${cityRise}px, 0) scale(${cityScale})`,
-            transformOrigin: "50% 100%",
-          }}
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[24vh] bg-gradient-to-t from-background to-transparent" />
-
-        {/* copy */}
-        <div
-          className="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center px-5"
-          style={{ opacity: copyOpacity }}
-        >
-          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
-            Air Force Bal Bharati School <span className="text-secondary">·</span> inter-school
-            event
-          </p>
-          <h1 className="mt-7 leading-[0.82]">
-            <span className="wordmark rgb-split block text-6xl md:text-[8.5rem]">QUANTUM</span>
-            <span className="outline-text block text-5xl md:text-[7rem]">V2.0</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-            Two days. Six events. One stage. Quiz, film, advertising, gaming, pitching — and one
-            challenge nobody sees coming.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <RegisterNowButton className="pill-solid px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em]" />
-            <Link
-              to="/events"
-              className="glitch pill border border-border/80 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground hover:border-secondary/70 hover:shadow-[var(--glow-secondary)]"
-            >
-              explore events
-            </Link>
-          </div>
-          <div className="mt-14 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.35em] text-muted-foreground/70">
-            <span className="scroll-cue inline-block">↓</span> descend into the city
-          </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-6 z-30 flex justify-center font-mono text-[10px] uppercase tracking-[0.35em] text-muted-foreground/70">
+          <span className="scroll-cue mr-3 inline-block">↓</span> descend into the city
         </div>
       </div>
     </section>

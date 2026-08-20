@@ -8,7 +8,7 @@ export function BatSignal({ dim = 0 }: { dim?: number }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute bottom-0 left-[18%] z-10 h-[78vh] w-[46vw] min-w-[320px]"
+      className="pointer-events-none absolute bottom-0 left-[42%] z-10 h-[128vh] w-[132vw] min-w-[680px] -translate-x-1/2"
       style={{ opacity, transition: "opacity 120ms linear" }}
     >
       {/* light cone */}
@@ -26,18 +26,19 @@ export function BatSignal({ dim = 0 }: { dim?: number }) {
       />
       {/* projected wordmark, skewed into the haze */}
       <div
-        className="absolute left-1/2 top-[14%] w-full -translate-x-1/2 text-center"
+        className="absolute left-0 top-[36%] w-full text-center md:top-[26%]"
+
         style={{
           mixBlendMode: "screen",
-          transform: "translateX(-50%) perspective(700px) rotateX(28deg) skewX(-7deg)",
+          transform: "perspective(700px) rotateX(28deg) skewX(-7deg)",
           filter: "blur(0.6px) drop-shadow(0 0 26px oklch(0.79 0.134 211 / 45%))",
           animation: "signal-flicker 4.2s infinite",
         }}
       >
-        <span className="wordmark block text-[clamp(2.5rem,7vw,6rem)] leading-[0.85] tracking-tight">
+        <span className="wordmark block text-[clamp(2.6rem,6.6vw,7rem)] leading-[0.85] tracking-tight">
           QUANTUM
         </span>
-        <span className="outline-text block text-[clamp(1.6rem,4.4vw,3.6rem)] leading-[0.9]">
+        <span className="outline-text block text-[clamp(1.8rem,4.8vw,4.6rem)] leading-[0.9]">
           V2.0
         </span>
       </div>
