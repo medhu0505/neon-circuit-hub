@@ -8,7 +8,7 @@ export function BatSignal({ dim = 0 }: { dim?: number }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute bottom-0 left-[42%] z-10 h-[128vh] w-[132vw] min-w-[680px] -translate-x-1/2"
+      className="pointer-events-none absolute bottom-0 left-[42%] z-30 h-[128vh] w-[132vw] min-w-[680px] -translate-x-1/2 [isolation:isolate]"
       style={{ opacity, transition: "opacity 120ms linear" }}
     >
       {/* light cone */}
@@ -46,8 +46,7 @@ export function BatSignal({ dim = 0 }: { dim?: number }) {
       <div
         className="absolute bottom-0 left-1/2 h-24 w-24 -translate-x-1/2 translate-y-1/3 rounded-full"
         style={{
-          background:
-            "radial-gradient(circle, oklch(0.95 0.08 211 / 65%) 0%, transparent 70%)",
+          background: "radial-gradient(circle, oklch(0.95 0.08 211 / 65%) 0%, transparent 70%)",
           mixBlendMode: "screen",
         }}
       />

@@ -1,11 +1,3 @@
 {
-  "version": 1,
-  "asset_id": "1617f1a6-5deb-4f4e-b7ca-519d7d041897",
-  "project_id": "901f2620-bf2f-4099-a7d0-db6a0881cb08",
-  "url": "/__l5e/assets-v1/1617f1a6-5deb-4f4e-b7ca-519d7d041897/tower-3.png",
-  "r2_key": "a/v1/901f2620-bf2f-4099-a7d0-db6a0881cb08/1617f1a6-5deb-4f4e-b7ca-519d7d041897/tower-3.png",
-  "original_filename": "tower-3.png",
-  "size": 190477,
-  "content_type": "image/png",
-  "created_at": "2026-08-20T10:31:28Z"
+  "url": "/assets/tower-3.png"
 }

@@ -19,7 +19,8 @@ export function SkySection() {
   const moonShift = mapRange(progress, 0, 1, 0, -160);
   const moonScale = mapRange(progress, 0, 1, 1, 0.82);
   const cityRise = mapRange(progress, 0, 1, 0, -140);
-  const cityScale = mapRange(progress, 0, 1, 1, 1.25);
+  // Keep the skyline subordinate to the projected signal; it grows only after the hero clears.
+  const cityScale = mapRange(progress, 0, 1, 0.82, 1.08);
 
   return (
     <section ref={ref} className="relative h-[190vh]" aria-label="Quantum v2.0 — the night sky">
@@ -54,10 +55,9 @@ export function SkySection() {
             src={cityAsset.url}
             alt=""
             aria-hidden="true"
-            /* narrow screens zoom into the skyline so it still reads as a city */
-            className="block h-auto w-[190%] max-w-none -translate-x-[24%] select-none object-contain sm:w-full sm:translate-x-0"
+            /* Keep room for the signal on narrow screens while preserving skyline detail. */
+            className="block h-auto w-[150%] max-w-none -translate-x-[17%] select-none object-contain sm:w-[92%] sm:translate-x-[4%]"
           />
-
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[24vh] bg-gradient-to-t from-background to-transparent" />
 
@@ -73,7 +73,6 @@ export function SkySection() {
             <InteractiveMoon />
           </div>
         </div>
-
 
         <div className="pointer-events-none absolute inset-x-0 bottom-6 z-30 flex justify-center font-mono text-[10px] uppercase tracking-[0.35em] text-muted-foreground/70">
           <span className="scroll-cue mr-3 inline-block">↓</span> descend into the city

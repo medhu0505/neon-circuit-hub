@@ -20,6 +20,12 @@ export function InteractiveMoon({ className = "" }: { className?: string }) {
   useEffect(() => {
     if (reduced) return;
     let raf = 0;
+    let glitchTimeout = 0;
+    const glitchInterval = window.setInterval(() => {
+      setGlitching(true);
+      window.clearTimeout(glitchTimeout);
+      glitchTimeout = window.setTimeout(() => setGlitching(false), 820);
+    }, 6200);
     let tx = 0;
     let ty = 0;
     let cx = 0;
@@ -36,7 +42,8 @@ export function InteractiveMoon({ className = "" }: { className?: string }) {
       const el = wrapRef.current;
       if (el) {
         el.style.transform = `translate3d(${cx.toFixed(2)}px, ${cy.toFixed(2)}px, 0) scale(${(
-          1 + Math.abs(cx) * 0.0006
+          1 +
+          Math.abs(cx) * 0.0006
         ).toFixed(4)})`;
       }
       if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) raf = requestAnimationFrame(tick);
@@ -44,6 +51,8 @@ export function InteractiveMoon({ className = "" }: { className?: string }) {
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      window.clearInterval(glitchInterval);
+      window.clearTimeout(glitchTimeout);
       window.removeEventListener("pointermove", onMove);
     };
   }, [reduced]);
